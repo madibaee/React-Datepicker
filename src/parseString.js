@@ -1,4 +1,4 @@
-import PersianDate from './PersianDate'
+import PersianDate from 'persian-date'
 export default (input, persianDate, format) => {
   const isPersian = persianDate.formatNumber()
   const tokens = /([[^[]*])|(\\)?(Mo|MM?M?M?|Do|DD?D?D?|dddddd?|ddddd?|dddd?|do?|w[o|w]?|YYYY|YY|a|A|hh?|HH?|mm?|ss?|SS?S?|zz?|ZZ?|X|LT|ll?l?l?|LL?L?L?)/g

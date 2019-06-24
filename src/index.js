@@ -1,5 +1,5 @@
 import { Component, createRef } from 'react'
-import PersianDate from './PersianDate'
+import PersianDate from 'persian-date'
 
 import Icon from '@mdi/react'
 import { mdiCalendar } from '@mdi/js'

@@ -22,19 +22,19 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-          presets: ['@babel/preset-env']
-        }
+            presets: ['@babel/preset-env']
+          }
         }
       },
       {
-            test: /\.scss$/,
-            exclude: /node_modules/,
-            use: [
-              "style-loader",
-              "css-loader",
-              "sass-loader"
-          ]
-        }
+        test: /\.scss$/,
+        exclude: /node_modules/,
+        use: [
+          "style-loader",
+          "css-loader",
+          "sass-loader"
+        ]
+      }
     ]
   }
 };

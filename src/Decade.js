@@ -1,4 +1,4 @@
-import PersianDate from './PersianDate'
+import PersianDate from 'persian-date'
 
 import DecadeRow from './DecadeRow'
 
