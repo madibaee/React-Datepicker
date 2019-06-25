@@ -22,7 +22,8 @@ export default ({
   goNext,
   onSelectYear,
   goToToday,
-  hasHeader
+  hasHeader,
+  todayLink
 }) => (
   <div className="picker">
     <div className={hasHeader? "header rich-header": "header"}>
@@ -34,7 +35,7 @@ export default ({
         <Icon path={(locale === 'fa')? mdiChevronRight :mdiChevronLeft} onClick={goPrev} />
       </span>
       <span onClick={onSelectYear}>{persianDate.format('MMMM YYYY')}</span>
-      {now.isSameMonth(persianDate)?
+      {now.isSameMonth(persianDate) || !todayLink?
         <span className="chevron">
           <Icon path={(locale === 'fa')? mdiChevronLeft: mdiChevronRight} onClick={goNext} />
         </span>
@@ -43,7 +44,9 @@ export default ({
           <span className="go-to-today" onClick={goToToday}>
             {(locale === 'fa')? "امروز": "Today"}
           </span>
-          <Icon className="chevron" path={(locale === 'fa')? mdiChevronLeft: mdiChevronRight} onClick={goNext} />
+          <span className="chevron">
+            <Icon path={(locale === 'fa')? mdiChevronLeft: mdiChevronRight} onClick={goNext} />
+          </span>
         </span>
       }
     </div>

@@ -41,7 +41,8 @@ var _default = function _default(_ref) {
       goNext = _ref.goNext,
       onSelectYear = _ref.onSelectYear,
       goToToday = _ref.goToToday,
-      hasHeader = _ref.hasHeader;
+      hasHeader = _ref.hasHeader,
+      todayLink = _ref.todayLink;
   return React.createElement("div", {
     className: "picker"
   }, React.createElement("div", {
@@ -55,7 +56,7 @@ var _default = function _default(_ref) {
     onClick: goPrev
   })), React.createElement("span", {
     onClick: onSelectYear
-  }, persianDate.format('MMMM YYYY')), now.isSameMonth(persianDate) ? React.createElement("span", {
+  }, persianDate.format('MMMM YYYY')), now.isSameMonth(persianDate) || !todayLink ? React.createElement("span", {
     className: "chevron"
   }, React.createElement(_react["default"], {
     path: locale === 'fa' ? _js.mdiChevronLeft : _js.mdiChevronRight,
@@ -65,11 +66,12 @@ var _default = function _default(_ref) {
   }, React.createElement("span", {
     className: "go-to-today",
     onClick: goToToday
-  }, locale === 'fa' ? "امروز" : "Today"), React.createElement(_react["default"], {
-    className: "chevron",
+  }, locale === 'fa' ? "امروز" : "Today"), React.createElement("span", {
+    className: "chevron"
+  }, React.createElement(_react["default"], {
     path: locale === 'fa' ? _js.mdiChevronLeft : _js.mdiChevronRight,
     onClick: goNext
-  }))), React.createElement("div", {
+  })))), React.createElement("div", {
     className: "body"
   }, React.createElement("table", null, React.createElement("thead", null, React.createElement("tr", {
     className: "week-days"

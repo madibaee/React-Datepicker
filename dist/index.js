@@ -99,7 +99,8 @@ function (_Component) {
       hiddenInput: props.hiddenInput || false,
       hiddenInputFormat: props.hiddenInputFormat || 'YYYY-MM-DD',
       hiddenInputLocale: props.hiddenInputLocale || 'en',
-      hiddenInputCalendar: props.hiddenInputCalendar || 'gregorian'
+      hiddenInputCalendar: props.hiddenInputCalendar || 'gregorian',
+      todayLink: props.todayLink || false
     };
     _this.dateInput = (0, _react.createRef)();
     _this.openCalendar = _this.openCalendar.bind(_assertThisInitialized(_this));
@@ -185,7 +186,8 @@ function (_Component) {
         goPrev: this.goToPrevMonth,
         onSelectYear: this.showYear,
         goToToday: this.goToToday,
-        hasHeader: this.state.hasHeader
+        hasHeader: this.state.hasHeader,
+        todayLink: this.state.todayLink
       };
     }
   }, {

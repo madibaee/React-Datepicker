@@ -17,7 +17,7 @@ $light-blue: #62adff;
 
   .header {
     .go-to-today {
-      top: 7px;
+      top: 9px;
       right: -100px;
     }
   }
@@ -140,11 +140,11 @@ input {
 
   .go-to-today {
     position: absolute;
-    top: 10px;
-    left: -27px;
+    top: 11px;
+    left: -25px;
     margin-left: auto;
     margin-right: auto;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
     color: $blue;
 

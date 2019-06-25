@@ -147,7 +147,7 @@ class PersianDatepicker extends React.Component {
         </div>
         <div className="datepicker">
           <h4>Light Theme</h4>
-          <Datepicker {...this.state} />
+          <Datepicker {...this.state} todayLink={true} />
         </div>
         <div className="datepicker dark">
           <h4>Dark Theme</h4>

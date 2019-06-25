@@ -51,7 +51,8 @@ class Container extends Component {
       hiddenInput: props.hiddenInput || false,
       hiddenInputFormat: props.hiddenInputFormat || 'YYYY-MM-DD',
       hiddenInputLocale: props.hiddenInputLocale || 'en',
-      hiddenInputCalendar: props.hiddenInputCalendar || 'gregorian'
+      hiddenInputCalendar: props.hiddenInputCalendar || 'gregorian',
+      todayLink: props.todayLink || false
     }
 
     this.dateInput = createRef()
@@ -131,7 +132,8 @@ class Container extends Component {
       goPrev: this.goToPrevMonth,
       onSelectYear: this.showYear,
       goToToday: this.goToToday,
-      hasHeader: this.state.hasHeader
+      hasHeader: this.state.hasHeader,
+      todayLink: this.state.todayLink
     }
   }
 

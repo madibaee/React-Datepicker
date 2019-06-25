@@ -43,8 +43,8 @@
 }
 
 .datepicker {
-  flex: 0 0 200px;
-  width: 200px;
+  flex: 0 0 300px;
+  width: 300px;
   margin: auto;
   text-align: center;
 
@@ -52,6 +52,7 @@
     $bg-color: #21252b;
     $color: #abb2bf;
     $blue: #61afef;
+
     .picker {
       background-color: $bg-color;
       color: $color;
@@ -61,8 +62,10 @@
       .week-days {
         color: #eee;
         fill: #eee;
+
         .go-to-today {
           color: $blue;
+
           &:hover {
             color: darken($blue, 10%);
           }
@@ -81,12 +84,19 @@
 
       tr td.today {
         background-color: darken($blue, 10%);
-        color: lighten($color, 30%)
+        color: lighten($color, 30%);
       }
+
       tr td.selected {
         background-color: $blue;
-        color: lighten($color, 30%)
+        color: lighten($color, 30%);
       }
     }
+  }
+}
+@media (max-width: 400px) {
+  .datepicker {
+    flex: 0 0 200px;
+    width: 200px;
   }
 }
