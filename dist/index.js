@@ -85,8 +85,8 @@ function (_Component) {
     var persianDate = now.startOf('month');
     var format = props.format || 'D MMMM YYYY';
     _this.state = {
-      locale: props.locale,
-      calendar: props.calendar,
+      locale: props.locale || 'en',
+      calendar: props.calendar || 'gregorian',
       now: now,
       persianDate: persianDate,
       selectedDate: now,
