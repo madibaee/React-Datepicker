@@ -26,12 +26,6 @@ class Container extends Component {
         ...nextProps
       })
     }
-    if (nextProps.format !== prevState.format) {
-      return ({
-        format: nextProps.format || 'D MMMM YYYY',
-        ...nextProps
-      })
-    }
     return nextProps
   }
 
@@ -52,7 +46,12 @@ class Container extends Component {
       format,
       updateInputValue: true,
       isOpen: false,
-      hasHeader: props.hasHeader || false
+      hasHeader: props.hasHeader || false,
+      inputName: props.inputName,
+      hiddenInput: props.hiddenInput || false,
+      hiddenInputFormat: props.hiddenInputFormat || 'YYYY-MM-DD',
+      hiddenInputLocale: props.hiddenInputLocale || 'en',
+      hiddenInputCalendar: props.hiddenInputCalendar || 'gregorian'
     }
 
     this.dateInput = createRef()
@@ -322,11 +321,23 @@ class Container extends Component {
     return {
       className: "date-input",
       type: "text",
+      name: this.state.inputName,
       spellCheck: false,
       onChange: this.parseDate,
       onFocus: this.onFocusInput,
       onBlur: this.onBlurInput,
       ref: this.dateInput
+    }
+  }
+
+  hiddenInputAttributes() {
+    const date = new PersianDate(this.state.selectedDate)
+    date.toLocale(this.state.hiddenInputLocale)
+    date.toCalendar(this.state.hiddenInputCalendar)
+    return {
+      type: "hidden",
+      name: this.state.inputName,
+      value: date.format(this.state.hiddenInputFormat),
     }
   }
 
@@ -336,6 +347,9 @@ class Container extends Component {
         <div className="input">
           <Icon className="input-icon" path={mdiCalendar} onClick={this.toggleCalendar} />
           <input {...this.inputAttributes()} />
+          {this.state.hiddenInput?
+          <input {...this.hiddenInputAttributes()} />:
+          ''}
         </div>
         {
           this.state.isOpen?

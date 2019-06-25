@@ -69,12 +69,6 @@ function (_Component) {
         }, nextProps);
       }
 
-      if (nextProps.format !== prevState.format) {
-        return _objectSpread({
-          format: nextProps.format || 'D MMMM YYYY'
-        }, nextProps);
-      }
-
       return nextProps;
     }
   }]);
@@ -100,7 +94,12 @@ function (_Component) {
       format: format,
       updateInputValue: true,
       isOpen: false,
-      hasHeader: props.hasHeader || false
+      hasHeader: props.hasHeader || false,
+      inputName: props.inputName,
+      hiddenInput: props.hiddenInput || false,
+      hiddenInputFormat: props.hiddenInputFormat || 'YYYY-MM-DD',
+      hiddenInputLocale: props.hiddenInputLocale || 'en',
+      hiddenInputCalendar: props.hiddenInputCalendar || 'gregorian'
     };
     _this.dateInput = (0, _react.createRef)();
     _this.openCalendar = _this.openCalendar.bind(_assertThisInitialized(_this));
@@ -393,11 +392,24 @@ function (_Component) {
       return {
         className: "date-input",
         type: "text",
+        name: this.state.inputName,
         spellCheck: false,
         onChange: this.parseDate,
         onFocus: this.onFocusInput,
         onBlur: this.onBlurInput,
         ref: this.dateInput
+      };
+    }
+  }, {
+    key: "hiddenInputAttributes",
+    value: function hiddenInputAttributes() {
+      var date = new _persianDate["default"](this.state.selectedDate);
+      date.toLocale(this.state.hiddenInputLocale);
+      date.toCalendar(this.state.hiddenInputCalendar);
+      return {
+        type: "hidden",
+        name: this.state.inputName,
+        value: date.format(this.state.hiddenInputFormat)
       };
     }
   }, {
@@ -412,7 +424,7 @@ function (_Component) {
         className: "input-icon",
         path: _js.mdiCalendar,
         onClick: this.toggleCalendar
-      }), React.createElement("input", this.inputAttributes())), this.state.isOpen ? this.state.view === 'month' ? React.createElement(_Month["default"], this.monthAttributes()) : this.state.view === 'year' ? React.createElement(_Year["default"], this.yearAttributes()) : this.state.view === 'decade' ? React.createElement(_Decade["default"], this.decadeAttributes()) : this.state.view === 'century' ? React.createElement(_Century["default"], this.centuryAttributes()) : '' : '');
+      }), React.createElement("input", this.inputAttributes()), this.state.hiddenInput ? React.createElement("input", this.hiddenInputAttributes()) : ''), this.state.isOpen ? this.state.view === 'month' ? React.createElement(_Month["default"], this.monthAttributes()) : this.state.view === 'year' ? React.createElement(_Year["default"], this.yearAttributes()) : this.state.view === 'decade' ? React.createElement(_Decade["default"], this.decadeAttributes()) : this.state.view === 'century' ? React.createElement(_Century["default"], this.centuryAttributes()) : '' : '');
     }
   }]);
 

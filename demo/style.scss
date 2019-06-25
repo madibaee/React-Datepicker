@@ -15,19 +15,36 @@
   width: 100%;
   flex: 0 0 100%;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   text-align: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   margin-bottom: 2rem;
 }
 
-.calendar {
-  width: 33.33%;
-  flex: 0 0 33.33%;
+.option {
+  min-width: 150px;
+  width: 200px;
+  flex: 0 0 200px;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.type {
+  width: 100px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.pretty {
+  margin-bottom: 0.5rem;
 }
 
 .datepicker {
-  flex: 0 0 300px;
-  width: 300px;
+  flex: 0 0 200px;
+  width: 200px;
   margin: auto;
   text-align: center;
 
