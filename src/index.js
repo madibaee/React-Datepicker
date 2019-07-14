@@ -35,7 +35,7 @@ class Container extends Component {
     now.toCalendar(props.calendar)
     now.toLocale(props.locale)
     const persianDate = now.startOf('month')
-    const format = props.format || 'D MMMM YYYY'
+    const format = props.format || 'l'
     this.state = {
       locale: props.locale || 'en',
       calendar: props.calendar || 'gregorian',
