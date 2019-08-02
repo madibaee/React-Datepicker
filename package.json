@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack --mode production",
     "start:dev": "webpack-dev-server",
-    "transpile": "babel src -d dist --copy-files"
+    "transpile": "babel src -d dist --copy-files",
+    "transpile:css": "node-sass --include-path scss style/style.scss style/style.css"
   },
   "author": "MA Dibaee",
   "license": "MIT",

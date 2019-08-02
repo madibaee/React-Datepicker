@@ -1,0 +1,154 @@
+@import url("https://fonts.googleapis.com/css?family=Nunito");
+* {
+  box-sizing: border-box; }
+
+.react-persian-datepicker[dir="rtl"] {
+  direction: rtl !important; }
+  .react-persian-datepicker[dir="rtl"] .header .go-to-today {
+    top: 9px;
+    right: -100px; }
+  .react-persian-datepicker[dir="rtl"] .month {
+    margin-top: 12px !important; }
+
+.react-persian-datepicker,
+input {
+  position: relative;
+  font-family: Nunito,IRANSans,sans-serif; }
+
+.input {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid black; }
+  .input:focus {
+    border-color: blue; }
+
+.date-input {
+  border: none;
+  padding: 0.5rem 0.75rem;
+  width: 275px; }
+  .date-input:focus {
+    outline: none; }
+
+.input-icon {
+  width: 25px;
+  height: 25px; }
+
+.picker {
+  position: absolute;
+  z-index: 1000;
+  top: 2.3rem;
+  width: 300px;
+  background-color: white;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }
+
+.rich-header {
+  background-color: cornsilk;
+  color: #444;
+  fill: #444; }
+  .rich-header .today-info {
+    height: 90px;
+    width: 100%;
+    display: flex; }
+    .rich-header .today-info .info {
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      height: 80%;
+      direction: ltr !important;
+      width: 200px; }
+      .rich-header .today-info .info .month {
+        margin-top: 15px; }
+      .rich-header .today-info .info .month, .rich-header .today-info .info .year {
+        flex: 0 0 auto;
+        font-size: 0.9rem;
+        text-align: left; }
+      .rich-header .today-info .info .date {
+        display: flex;
+        flex: 0 0 100%; }
+      .rich-header .today-info .info .h1 {
+        margin: auto;
+        font-size: 45px;
+        font-weight: bold;
+        padding-left: 0.25rem;
+        padding-right: 0.25rem; }
+      .rich-header .today-info .info .day {
+        margin: auto;
+        font-size: 0.9rem;
+        margin-right: 0; }
+
+.header {
+  font-size: 20px;
+  font-weight: 500;
+  display: flex;
+  flex-wrap: wrap;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 6px; }
+  .header span:not(.today-chevron) {
+    cursor: pointer; }
+  .header .chevron {
+    width: 40px;
+    height: 40px; }
+  .header .today-chevron {
+    position: relative;
+    width: 40px;
+    height: 40px; }
+  .header .go-to-today {
+    position: absolute;
+    top: 11px;
+    left: -25px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 12px;
+    font-weight: 400;
+    color: #007bff; }
+    .header .go-to-today:hover {
+      color: #62adff; }
+
+table {
+  width: 100%; }
+
+.next,
+.prev,
+.week-days {
+  color: #9e9e9e; }
+
+tr td,
+tr th {
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  line-height: 40px;
+  font-size: 16px;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 50%;
+  user-select: none; }
+
+tr.century-decades, tr.decade-years, tr.year-months {
+  display: flex; }
+  tr.century-decades td, tr.decade-years td, tr.year-months td {
+    flex: 1 0 33.33333%;
+    border-radius: 0; }
+
+tr td:not(.today):not(.selected):not(.disabled):not(.prev):not(.next):hover {
+  cursor: pointer;
+  background-color: #eee; }
+
+tr td.today {
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 2px 2px 0 rgba(0, 123, 255, 0.14), 0 3px 1px -2px rgba(0, 123, 255, 0.12), 0 1px 5px 0 rgba(0, 123, 255, 0.2); }
+  tr td.today:hover {
+    background-color: #0062cc; }
+
+tr td.selected {
+  background-color: #62adff;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 2px 2px 0 rgba(98, 173, 255, 0.14), 0 3px 1px -2px rgba(98, 173, 255, 0.12), 0 1px 5px 0 rgba(98, 173, 255, 0.2); }
+  tr td.selected:hover {
+    background-color: #2f92ff; }
