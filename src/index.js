@@ -226,7 +226,7 @@ class Container extends Component {
 
   goToPrevMonth() {
     var persianDate = this.state.persianDate
-    persianDate = persianDate.add('d', -persianDate.date())
+    persianDate = persianDate.add('d', -2)
     this.setState({
       persianDate: new PersianDate([persianDate.year(), persianDate.month()])
     })

@@ -32,7 +32,7 @@ export default ({
         ""
       }
       <span className="chevron">
-        <Icon path={(locale === 'fa')? mdiChevronRight :mdiChevronLeft} onClick={goPrev} />
+        <Icon path={(locale === 'fa')? mdiChevronRight: mdiChevronLeft} onClick={goPrev} />
       </span>
       <span onClick={onSelectYear}>{persianDate.format('MMMM YYYY')}</span>
       {now.isSameMonth(persianDate) || !todayLink?
