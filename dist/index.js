@@ -289,7 +289,7 @@ function (_Component) {
     key: "goToPrevMonth",
     value: function goToPrevMonth() {
       var persianDate = this.state.persianDate;
-      persianDate = persianDate.add('d', -persianDate.date());
+      persianDate = persianDate.add('d', -2);
       this.setState({
         persianDate: new _persianDate["default"]([persianDate.year(), persianDate.month()])
       });
