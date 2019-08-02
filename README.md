@@ -1,5 +1,5 @@
 # React-Persian-Datepicker
-React component for date inputs (gregorian & jalali).
+React component for date inputs (Gregorian & Jalali).
 [demo](https://madibaee.github.io/React-Datepicker/demo/)
 
 ## Install
@@ -8,12 +8,15 @@ React component for date inputs (gregorian & jalali).
 npm install @diba/react-datepicker --save-dev
 ```
 
-## Webpack
-```javascript
-import Datepicker from '@diba/react-datepicker';
-```
-
 ## Setup
+
+### Add Styles
+
+#### CSS
+[css](https://github.com/madibaee/React-Datepicker/blob/master/style/style.css)
+
+#### SCSS
+[scss](https://github.com/madibaee/React-Datepicker/blob/master/style/style.scss)
 
 ### Calendar type
 
