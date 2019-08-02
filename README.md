@@ -12,11 +12,9 @@ npm install @diba/react-datepicker --save-dev
 
 ### Add Styles
 
-#### CSS
-[css](https://github.com/madibaee/React-Datepicker/blob/master/style/style.css)
+#### [CSS](https://github.com/madibaee/React-Datepicker/blob/master/style/style.css)
 
-#### SCSS
-[scss](https://github.com/madibaee/React-Datepicker/blob/master/style/style.scss)
+#### [SCSS](https://github.com/madibaee/React-Datepicker/blob/master/style/style.scss)
 
 ### Calendar type
 
