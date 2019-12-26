@@ -178,6 +178,10 @@ function (_Component) {
       this.setState({
         isOpen: !this.state.isOpen
       });
+
+      if (this.props.onToggleCalendar) {
+        this.props.onToggleCalendar();
+      }
     }
   }, {
     key: "monthAttributes",
