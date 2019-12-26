@@ -5,11 +5,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+var _react = _interopRequireDefault(require("react"));
+
 var _persianDate = _interopRequireDefault(require("persian-date"));
 
 var _DecadeRow = _interopRequireDefault(require("./DecadeRow"));
 
-var _react = _interopRequireDefault(require("@mdi/react"));
+var _react2 = _interopRequireDefault(require("@mdi/react"));
 
 var _js = require("@mdi/js");
 
@@ -35,26 +37,26 @@ var _default = function _default(_ref) {
       goPrev = _ref.goPrev,
       goNext = _ref.goNext,
       onSelectCentury = _ref.onSelectCentury;
-  return React.createElement("div", {
+  return _react["default"].createElement("div", {
     className: "picker"
-  }, React.createElement("div", {
+  }, _react["default"].createElement("div", {
     className: "header"
-  }, React.createElement("span", {
+  }, _react["default"].createElement("span", {
     className: "chevron"
-  }, React.createElement(_react["default"], {
+  }, _react["default"].createElement(_react2["default"], {
     path: locale === 'fa' ? _js.mdiChevronRight : _js.mdiChevronLeft,
     onClick: goPrev
-  })), React.createElement("span", {
+  })), _react["default"].createElement("span", {
     onClick: onSelectCentury
-  }, decade(year).add('y', 9).format('YYYY') + ' - ' + decade(year).format('YYYY')), React.createElement("span", {
+  }, decade(year).add('y', 9).format('YYYY') + ' - ' + decade(year).format('YYYY')), _react["default"].createElement("span", {
     className: "chevron"
-  }, React.createElement(_react["default"], {
+  }, _react["default"].createElement(_react2["default"], {
     path: locale === 'fa' ? _js.mdiChevronLeft : _js.mdiChevronRight,
     onClick: goNext
-  }))), React.createElement("div", {
+  }))), _react["default"].createElement("div", {
     className: "body"
-  }, React.createElement("table", null, React.createElement("tbody", null, _toConsumableArray(Array(4)).map(function (_, i) {
-    return React.createElement(_DecadeRow["default"], {
+  }, _react["default"].createElement("table", null, _react["default"].createElement("tbody", null, _toConsumableArray(Array(4)).map(function (_, i) {
+    return _react["default"].createElement(_DecadeRow["default"], {
       key: i,
       row: i,
       persianDate: decade(year),

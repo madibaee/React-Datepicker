@@ -5,11 +5,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+var _react = _interopRequireDefault(require("react"));
+
 var _MonthRow = _interopRequireDefault(require("./MonthRow"));
 
 var _TodayInfo = _interopRequireDefault(require("./TodayInfo"));
 
-var _react = _interopRequireDefault(require("@mdi/react"));
+var _react2 = _interopRequireDefault(require("@mdi/react"));
 
 var _js = require("@mdi/js");
 
@@ -43,44 +45,44 @@ var _default = function _default(_ref) {
       goToToday = _ref.goToToday,
       hasHeader = _ref.hasHeader,
       todayLink = _ref.todayLink;
-  return React.createElement("div", {
+  return _react["default"].createElement("div", {
     className: "picker"
-  }, React.createElement("div", {
+  }, _react["default"].createElement("div", {
     className: hasHeader ? "header rich-header" : "header"
-  }, hasHeader ? React.createElement(_TodayInfo["default"], {
+  }, hasHeader ? _react["default"].createElement(_TodayInfo["default"], {
     date: selected
-  }) : "", React.createElement("span", {
+  }) : "", _react["default"].createElement("span", {
     className: "chevron"
-  }, React.createElement(_react["default"], {
+  }, _react["default"].createElement(_react2["default"], {
     path: locale === 'fa' ? _js.mdiChevronRight : _js.mdiChevronLeft,
     onClick: goPrev
-  })), React.createElement("span", {
+  })), _react["default"].createElement("span", {
     onClick: onSelectYear
-  }, persianDate.format('MMMM YYYY')), now.isSameMonth(persianDate) || !todayLink ? React.createElement("span", {
+  }, persianDate.format('MMMM YYYY')), now.isSameMonth(persianDate) || !todayLink ? _react["default"].createElement("span", {
     className: "chevron"
-  }, React.createElement(_react["default"], {
+  }, _react["default"].createElement(_react2["default"], {
     path: locale === 'fa' ? _js.mdiChevronLeft : _js.mdiChevronRight,
     onClick: goNext
-  })) : React.createElement("span", {
+  })) : _react["default"].createElement("span", {
     className: "today-chevron"
-  }, React.createElement("span", {
+  }, _react["default"].createElement("span", {
     className: "go-to-today",
     onClick: goToToday
-  }, locale === 'fa' ? "امروز" : "Today"), React.createElement("span", {
+  }, locale === 'fa' ? "امروز" : "Today"), _react["default"].createElement("span", {
     className: "chevron"
-  }, React.createElement(_react["default"], {
+  }, _react["default"].createElement(_react2["default"], {
     path: locale === 'fa' ? _js.mdiChevronLeft : _js.mdiChevronRight,
     onClick: goNext
-  })))), React.createElement("div", {
+  })))), _react["default"].createElement("div", {
     className: "body"
-  }, React.createElement("table", null, React.createElement("thead", null, React.createElement("tr", {
+  }, _react["default"].createElement("table", null, _react["default"].createElement("thead", null, _react["default"].createElement("tr", {
     className: "week-days"
   }, persianDate.rangeName().weekdaysMin.map(function (name, i) {
-    return React.createElement("th", {
+    return _react["default"].createElement("th", {
       key: i
     }, name);
-  }))), React.createElement("tbody", null, _toConsumableArray(Array(computeRows(persianDate))).map(function (_, i) {
-    return React.createElement(_MonthRow["default"], {
+  }))), _react["default"].createElement("tbody", null, _toConsumableArray(Array(computeRows(persianDate))).map(function (_, i) {
+    return _react["default"].createElement(_MonthRow["default"], {
       key: i,
       row: i,
       persianDate: persianDate,

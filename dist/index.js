@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _react = require("react");
+var _react = _interopRequireWildcard(require("react"));
 
 var _persianDate = _interopRequireDefault(require("persian-date"));
 
@@ -24,6 +24,10 @@ var _Century = _interopRequireDefault(require("./Century"));
 var _parseString = _interopRequireDefault(require("./parseString"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -419,16 +423,16 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      return React.createElement("div", {
+      return _react["default"].createElement("div", {
         className: "react-persian-datepicker",
         dir: this.state.locale === 'fa' ? "rtl" : ""
-      }, React.createElement("div", {
+      }, _react["default"].createElement("div", {
         className: "input"
-      }, React.createElement(_react2["default"], {
+      }, _react["default"].createElement(_react2["default"], {
         className: "input-icon",
         path: _js.mdiCalendar,
         onClick: this.toggleCalendar
-      }), React.createElement("input", this.inputAttributes()), this.state.hiddenInput ? React.createElement("input", this.hiddenInputAttributes()) : ''), this.state.isOpen ? this.state.view === 'month' ? React.createElement(_Month["default"], this.monthAttributes()) : this.state.view === 'year' ? React.createElement(_Year["default"], this.yearAttributes()) : this.state.view === 'decade' ? React.createElement(_Decade["default"], this.decadeAttributes()) : this.state.view === 'century' ? React.createElement(_Century["default"], this.centuryAttributes()) : '' : '');
+      }), _react["default"].createElement("input", this.inputAttributes()), this.state.hiddenInput ? _react["default"].createElement("input", this.hiddenInputAttributes()) : ''), this.state.isOpen ? this.state.view === 'month' ? _react["default"].createElement(_Month["default"], this.monthAttributes()) : this.state.view === 'year' ? _react["default"].createElement(_Year["default"], this.yearAttributes()) : this.state.view === 'decade' ? _react["default"].createElement(_Decade["default"], this.decadeAttributes()) : this.state.view === 'century' ? _react["default"].createElement(_Century["default"], this.centuryAttributes()) : '' : '');
     }
   }]);
 

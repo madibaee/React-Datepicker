@@ -5,6 +5,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -31,10 +35,10 @@ var _default = function _default(_ref) {
   var row = _ref.row,
       persianDate = _ref.persianDate,
       onSelectYear = _ref.onSelectYear;
-  return React.createElement("tr", {
+  return _react["default"].createElement("tr", {
     className: "decade-years"
   }, _toConsumableArray(Array(3)).map(function (_, j) {
-    return React.createElement("td", {
+    return _react["default"].createElement("td", {
       className: isActive(row, j) ? "" : "disabled",
       key: j,
       "data-year": isActive(row, j) ? year(row, j, persianDate) : '',

@@ -5,6 +5,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -47,8 +51,8 @@ var _default = function _default(_ref) {
       now = _ref.now,
       selected = _ref.selected,
       onSelectDate = _ref.onSelectDate;
-  return React.createElement("tr", null, _toConsumableArray(Array(7)).map(function (_, j) {
-    return React.createElement("td", {
+  return _react["default"].createElement("tr", null, _toConsumableArray(Array(7)).map(function (_, j) {
+    return _react["default"].createElement("td", {
       key: j,
       className: isPrev(row, j, persianDate) ? 'prev' : isNext(row, j, persianDate) ? 'next' : isSame(now, day(row, j, persianDate)) ? 'today' : isSame(selected, day(row, j, persianDate)) ? 'selected' : '',
       "data-day": indexToDay(row, j, persianDate),
