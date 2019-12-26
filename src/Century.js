@@ -1,3 +1,4 @@
+import React from 'react'
 import PersianDate from 'persian-date'
 
 import CenturyRow from './CenturyRow'

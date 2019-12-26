@@ -1,3 +1,5 @@
+import React from 'react'
+
 const firstDay = persianDate => persianDate.day()
 
 const index = (row, column) => (row * 7) + column

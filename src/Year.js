@@ -1,3 +1,5 @@
+import React from 'react'
+
 import Icon from '@mdi/react'
 import { mdiChevronLeft, mdiChevronRight } from '@mdi/js'
 

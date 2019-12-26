@@ -1,4 +1,4 @@
-import { Component, createRef } from 'react'
+import React, { Component, createRef } from 'react'
 import PersianDate from 'persian-date'
 
 import Icon from '@mdi/react'

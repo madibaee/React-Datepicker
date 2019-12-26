@@ -1,3 +1,5 @@
+import React from 'react'
+
 export default ({date}) => (
   <div className="today-info">
     <div className="info">
