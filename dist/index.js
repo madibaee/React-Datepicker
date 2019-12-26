@@ -180,7 +180,7 @@ function (_Component) {
       });
 
       if (this.props.onToggleCalendar) {
-        this.props.onToggleCalendar();
+        this.props.onToggleCalendar(!this.state.isOpen);
       }
     }
   }, {

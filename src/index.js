@@ -120,7 +120,7 @@ class Container extends Component {
       isOpen: !this.state.isOpen
     })
     if (this.props.onToggleCalendar) {
-      this.props.onToggleCalendar()
+      this.props.onToggleCalendar(!this.state.isOpen)
     }
   }
 
