@@ -10,8 +10,6 @@ import Decade from './Decade'
 import Century from './Century'
 import parseString from './parseString'
 
-import '../style/style.scss'
-
 class Container extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     const now = new PersianDate()

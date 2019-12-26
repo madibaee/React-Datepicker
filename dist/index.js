@@ -23,8 +23,6 @@ var _Century = _interopRequireDefault(require("./Century"));
 
 var _parseString = _interopRequireDefault(require("./parseString"));
 
-require("../style/style.scss");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
