@@ -34,9 +34,9 @@
     "react-dom": "^16.12.0"
   },
   "dependencies": {
-    "@diba/react-datepicker": "^1.1.5",
     "@mdi/js": "^4.7.95",
     "@mdi/react": "^1.2.1",
+    "mdi-react": "^6.5.0",
     "persian-date": "^1.0.5",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"

@@ -15,16 +15,18 @@ class Container extends Component {
     const now = new PersianDate()
     now.toCalendar(nextProps.calendar)
     now.toLocale(nextProps.locale)
-    if (nextProps.locale !== prevState.locale ||
-      nextProps.calendar !== prevState.calendar) {
-      return ({
+    if (
+      nextProps.locale !== prevState.locale ||
+      nextProps.calendar !== prevState.calendar
+    ) {
+      return {
         locale: nextProps.locale,
         calendar: nextProps.calendar,
         now,
         persianDate: now.startOf('month'),
         selectedDate: now,
         ...nextProps
-      })
+      }
     }
     return nextProps
   }
@@ -52,7 +54,7 @@ class Container extends Component {
       hiddenInputFormat: props.hiddenInputFormat || 'YYYY-MM-DD',
       hiddenInputLocale: props.hiddenInputLocale || 'en',
       hiddenInputCalendar: props.hiddenInputCalendar || 'gregorian',
-      todayLink: props.todayLink || false
+      hasTodayLink: props.hasTodayLink || false
     }
 
     this.dateInput = createRef()
@@ -90,7 +92,7 @@ class Container extends Component {
   }
 
   setInputValue() {
-    if(this.state.updateInputValue) {
+    if (this.state.updateInputValue) {
       this.dateInput.current.value = this.state.selectedDate.format(
         this.state.format
       )
@@ -136,7 +138,7 @@ class Container extends Component {
       onSelectYear: this.showYear,
       goToToday: this.goToToday,
       hasHeader: this.state.hasHeader,
-      todayLink: this.state.todayLink
+      hasTodayLink: this.state.hasTodayLink
     }
   }
 
@@ -168,14 +170,14 @@ class Container extends Component {
       year: this.state.persianDate.year(),
       onSelectDecade: this.setDecade,
       goNext: this.goToNextCentury,
-      goPrev: this.goToPrevCentury,
+      goPrev: this.goToPrevCentury
     }
   }
 
   goToToday() {
     this.setState({
       persianDate: this.state.now.startOf('month'),
-      selectedDate: this.state.now,
+      selectedDate: this.state.now
     })
   }
 
@@ -192,10 +194,7 @@ class Container extends Component {
 
   setMonth(event) {
     const month = event.target.getAttribute('data-month')
-    const persianDate = new PersianDate([
-      this.state.persianDate.year(),
-      month
-    ])
+    const persianDate = new PersianDate([this.state.persianDate.year(), month])
     this.setState({
       persianDate,
       view: 'month'
@@ -223,7 +222,7 @@ class Container extends Component {
   goToNextMonth() {
     const persianDate = this.state.persianDate.startOf('month').add('M', 1)
     this.setState({
-      persianDate,
+      persianDate
     })
   }
 
@@ -238,7 +237,7 @@ class Container extends Component {
   goToNextYear() {
     const persianDate = this.state.persianDate.startOf('year').add('y', 1)
     this.setState({
-      persianDate,
+      persianDate
     })
   }
 
@@ -253,32 +252,28 @@ class Container extends Component {
   goToNextDecade() {
     const persianDate = this.state.persianDate.startOf('year').add('y', 10)
     this.setState({
-      persianDate,
+      persianDate
     })
   }
 
   goToPrevDecade() {
-    const persianDate = new PersianDate([
-      this.state.persianDate.year() - 10
-    ])
+    const persianDate = new PersianDate([this.state.persianDate.year() - 10])
     this.setState({
-      persianDate,
+      persianDate
     })
   }
 
   goToNextCentury() {
     const persianDate = this.state.persianDate.startOf('year').add('y', 100)
     this.setState({
-      persianDate,
+      persianDate
     })
   }
 
   goToPrevCentury() {
-    const persianDate = new PersianDate([
-      this.state.persianDate.year() - 100
-    ])
+    const persianDate = new PersianDate([this.state.persianDate.year() - 100])
     this.setState({
-      persianDate,
+      persianDate
     })
   }
 
@@ -301,7 +296,11 @@ class Container extends Component {
   }
 
   parseDate(event) {
-    const date = parseString(event.target.value, this.state.persianDate, this.state.format)
+    const date = parseString(
+      event.target.value,
+      this.state.persianDate,
+      this.state.format
+    )
     if (date) {
       this.setState({
         selectedDate: date,
@@ -324,8 +323,8 @@ class Container extends Component {
 
   inputAttributes() {
     return {
-      className: "date-input",
-      type: "text",
+      className: 'date-input',
+      type: 'text',
       name: this.state.inputName,
       spellCheck: false,
       onChange: this.parseDate,
@@ -340,36 +339,47 @@ class Container extends Component {
     date.toLocale(this.state.hiddenInputLocale)
     date.toCalendar(this.state.hiddenInputCalendar)
     return {
-      type: "hidden",
+      type: 'hidden',
       name: this.state.inputName,
-      value: date.format(this.state.hiddenInputFormat),
+      value: date.format(this.state.hiddenInputFormat)
     }
   }
 
   render() {
     return (
-      <div className="react-persian-datepicker" dir={this.state.locale === 'fa'? "rtl": ""}>
+      <div
+        className="react-persian-datepicker"
+        dir={this.state.locale === 'fa' ? 'rtl' : ''}
+      >
         <div className="input">
-          <Icon className="input-icon" path={mdiCalendar} onClick={this.toggleCalendar} />
+          <Icon
+            className="input-icon"
+            path={mdiCalendar}
+            onClick={this.toggleCalendar}
+          />
           <input {...this.inputAttributes()} />
-          {this.state.hiddenInput?
-          <input {...this.hiddenInputAttributes()} />:
-          ''}
+          {this.state.hiddenInput ? (
+            <input {...this.hiddenInputAttributes()} />
+          ) : (
+            ''
+          )}
         </div>
-        {
-          this.state.isOpen?
-          this.state.view === 'month'?
-            <Month {...this.monthAttributes()} />:
-          this.state.view === 'year'?
-            <Year {...this.yearAttributes()} />:
-          this.state.view === 'decade'?
-            <Decade {...this.decadeAttributes()} />:
-          this.state.view === 'century'?
-            <Century {...this.centuryAttributes()} />: ''
-        :
+        {this.state.isOpen ? (
+          this.state.view === 'month' ? (
+            <Month {...this.monthAttributes()} />
+          ) : this.state.view === 'year' ? (
+            <Year {...this.yearAttributes()} />
+          ) : this.state.view === 'decade' ? (
+            <Decade {...this.decadeAttributes()} />
+          ) : this.state.view === 'century' ? (
+            <Century {...this.centuryAttributes()} />
+          ) : (
+            ''
+          )
+        ) : (
           ''
-        }
-    	</div>
+        )}
+      </div>
     )
   }
 }

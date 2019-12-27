@@ -10,7 +10,7 @@ class PersianDatepicker extends React.Component {
     this.state = {
       locale: 'en',
       calendar: 'gregorian',
-      format: "MMM D, YYYY"
+      format: 'MMM D, YYYY'
     }
 
     this.changeCalendar = this.changeCalendar.bind(this)
@@ -45,7 +45,8 @@ class PersianDatepicker extends React.Component {
 
             <div className="type">
               <div className="pretty p-default p-round">
-                <input type="radio"
+                <input
+                  type="radio"
                   name="type"
                   value="gregorian"
                   onChange={this.changeCalendar}
@@ -57,7 +58,8 @@ class PersianDatepicker extends React.Component {
               </div>
 
               <div className="pretty p-default p-round">
-                <input type="radio"
+                <input
+                  type="radio"
                   name="type"
                   value="persian"
                   onChange={this.changeCalendar}
@@ -68,7 +70,6 @@ class PersianDatepicker extends React.Component {
                 </div>
               </div>
             </div>
-
           </div>
 
           <div className="option">
@@ -76,7 +77,8 @@ class PersianDatepicker extends React.Component {
 
             <div className="type">
               <div className="pretty p-default p-round">
-                <input type="radio"
+                <input
+                  type="radio"
                   name="locale"
                   value="en"
                   onChange={this.changeLocale}
@@ -88,7 +90,8 @@ class PersianDatepicker extends React.Component {
               </div>
 
               <div className="pretty p-default p-round">
-                <input type="radio"
+                <input
+                  type="radio"
                   name="locale"
                   value="fa"
                   onChange={this.changeLocale}
@@ -99,7 +102,6 @@ class PersianDatepicker extends React.Component {
                 </div>
               </div>
             </div>
-
           </div>
 
           <div className="option">
@@ -107,7 +109,8 @@ class PersianDatepicker extends React.Component {
 
             <div className="type">
               <div className="pretty p-default p-round">
-                <input type="radio"
+                <input
+                  type="radio"
                   name="format"
                   value="MMM D, YYYY"
                   onChange={this.changeFormat}
@@ -119,7 +122,8 @@ class PersianDatepicker extends React.Component {
               </div>
 
               <div className="pretty p-default p-round">
-                <input type="radio"
+                <input
+                  type="radio"
                   name="format"
                   value="D MMMM YYYY"
                   onChange={this.changeFormat}
@@ -131,7 +135,8 @@ class PersianDatepicker extends React.Component {
               </div>
 
               <div className="pretty p-default p-round">
-                <input type="radio"
+                <input
+                  type="radio"
                   name="format"
                   value="l"
                   onChange={this.changeFormat}
@@ -143,11 +148,10 @@ class PersianDatepicker extends React.Component {
               </div>
             </div>
           </div>
-
         </div>
         <div className="datepicker">
           <h4>Light Theme</h4>
-          <Datepicker {...this.state} todayLink={true} />
+          <Datepicker {...this.state} hasTodayLink={true} />
         </div>
         <div className="datepicker dark">
           <h4>Dark Theme</h4>
@@ -162,7 +166,4 @@ class PersianDatepicker extends React.Component {
   }
 }
 
-render(
-	<PersianDatepicker />,
-  document.getElementById('container')
-)
+render(<PersianDatepicker />, document.getElementById('container'))
