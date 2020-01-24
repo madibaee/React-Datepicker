@@ -1,8 +1,7 @@
-import React, { Component, createRef } from 'react'
 import PersianDate from 'persian-date'
+import React, { Component, createRef } from 'react'
 
-import Icon from '@mdi/react'
-import { mdiCalendar } from '@mdi/js'
+import CalendarIcon from 'mdi-react/CalendarIcon'
 
 import Month from './Month'
 import Year from './Year'
@@ -96,6 +95,9 @@ class Container extends Component {
       this.dateInput.current.value = this.state.selectedDate.format(
         this.state.format
       )
+      if (this.props.onSetDate) {
+        this.props.onSetDate(this.state.selectedDate)
+      }
     }
   }
 
@@ -106,15 +108,11 @@ class Container extends Component {
   }
 
   openCalendar() {
-    this.setState({
-      isOpen: true
-    })
+    if (!this.state.isOpen) this.toggleCalendar()
   }
 
   closeCalendar() {
-    this.setState({
-      isOpen: false
-    })
+    if (this.state.isOpen) this.toggleCalendar()
   }
 
   toggleCalendar() {
@@ -352,11 +350,7 @@ class Container extends Component {
         dir={this.state.locale === 'fa' ? 'rtl' : ''}
       >
         <div className="input">
-          <Icon
-            className="input-icon"
-            path={mdiCalendar}
-            onClick={this.toggleCalendar}
-          />
+          <CalendarIcon className="input-icon" onClick={this.toggleCalendar} />
           <input {...this.inputAttributes()} />
           {this.state.hiddenInput ? (
             <input {...this.hiddenInputAttributes()} />
