@@ -1,720 +1,397 @@
-'use strict'
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+Object.defineProperty(exports, "__esModule", {
   value: true
-})
-exports['default'] = void 0
+});
+exports["default"] = void 0;
 
-var _persianDate = _interopRequireDefault(require('persian-date'))
+var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _react = _interopRequireWildcard(require('react'))
+var _persianDate = _interopRequireDefault(require("persian-date"));
 
-var _CalendarIcon = _interopRequireDefault(require('mdi-react/CalendarIcon'))
+var _react = _interopRequireWildcard(require("react"));
 
-var _Month = _interopRequireDefault(require('./Month'))
+var _Icons = require("./Icons");
 
-var _Year = _interopRequireDefault(require('./Year'))
+var _Month = _interopRequireDefault(require("./Month"));
 
-var _Decade = _interopRequireDefault(require('./Decade'))
+var _Year = _interopRequireDefault(require("./Year"));
 
-var _Century = _interopRequireDefault(require('./Century'))
+var _Decade = _interopRequireDefault(require("./Decade"));
 
-var _parseString = _interopRequireDefault(require('./parseString'))
+var _Century = _interopRequireDefault(require("./Century"));
 
-function _getRequireWildcardCache() {
-  if (typeof WeakMap !== 'function') return null
-  var cache = new WeakMap()
-  _getRequireWildcardCache = function _getRequireWildcardCache() {
-    return cache
-  }
-  return cache
-}
+var _parseString = _interopRequireDefault(require("./parseString"));
 
-function _interopRequireWildcard(obj) {
-  if (obj && obj.__esModule) {
-    return obj
-  }
-  if (
-    obj === null ||
-    (_typeof(obj) !== 'object' && typeof obj !== 'function')
-  ) {
-    return { default: obj }
-  }
-  var cache = _getRequireWildcardCache()
-  if (cache && cache.has(obj)) {
-    return cache.get(obj)
-  }
-  var newObj = {}
-  var hasPropertyDescriptor =
-    Object.defineProperty && Object.getOwnPropertyDescriptor
-  for (var key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      var desc = hasPropertyDescriptor
-        ? Object.getOwnPropertyDescriptor(obj, key)
-        : null
-      if (desc && (desc.get || desc.set)) {
-        Object.defineProperty(newObj, key, desc)
-      } else {
-        newObj[key] = obj[key]
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var Datepicker = function Datepicker(_ref) {
+  var _ref$type = _ref.type,
+      type = _ref$type === void 0 ? 'gregorian' : _ref$type,
+      _ref$locale = _ref.locale,
+      locale = _ref$locale === void 0 ? 'en' : _ref$locale,
+      _ref$format = _ref.format,
+      format = _ref$format === void 0 ? 'l' : _ref$format,
+      _ref$onChange = _ref.onChange,
+      onChange = _ref$onChange === void 0 ? function (x) {
+    return x;
+  } : _ref$onChange,
+      _ref$onFocus = _ref.onFocus,
+      onFocus = _ref$onFocus === void 0 ? function (x) {
+    return x;
+  } : _ref$onFocus,
+      _ref$onBlur = _ref.onBlur,
+      onBlur = _ref$onBlur === void 0 ? function (x) {
+    return x;
+  } : _ref$onBlur,
+      _ref$onSetDate = _ref.onSetDate,
+      onSetDate = _ref$onSetDate === void 0 ? function (x) {
+    return x;
+  } : _ref$onSetDate,
+      _ref$onGoToToday = _ref.onGoToToday,
+      onGoToToday = _ref$onGoToToday === void 0 ? function (x) {
+    return x;
+  } : _ref$onGoToToday,
+      _ref$onSetMonth = _ref.onSetMonth,
+      onSetMonth = _ref$onSetMonth === void 0 ? function (x) {
+    return x;
+  } : _ref$onSetMonth,
+      _ref$onSetYear = _ref.onSetYear,
+      onSetYear = _ref$onSetYear === void 0 ? function (x) {
+    return x;
+  } : _ref$onSetYear,
+      _ref$onSetDecade = _ref.onSetDecade,
+      onSetDecade = _ref$onSetDecade === void 0 ? function (x) {
+    return x;
+  } : _ref$onSetDecade,
+      _ref$onShowYear = _ref.onShowYear,
+      onShowYear = _ref$onShowYear === void 0 ? function (x) {
+    return x;
+  } : _ref$onShowYear,
+      _ref$onShowDecade = _ref.onShowDecade,
+      onShowDecade = _ref$onShowDecade === void 0 ? function (x) {
+    return x;
+  } : _ref$onShowDecade,
+      _ref$onShowCentury = _ref.onShowCentury,
+      onShowCentury = _ref$onShowCentury === void 0 ? function (x) {
+    return x;
+  } : _ref$onShowCentury,
+      _ref$inputName = _ref.inputName,
+      inputName = _ref$inputName === void 0 ? 'date' : _ref$inputName,
+      _ref$hasHeader = _ref.hasHeader,
+      hasHeader = _ref$hasHeader === void 0 ? false : _ref$hasHeader,
+      _ref$hasTodayLink = _ref.hasTodayLink,
+      hasTodayLink = _ref$hasTodayLink === void 0 ? false : _ref$hasTodayLink,
+      _ref$hasHiddenInput = _ref.hasHiddenInput,
+      hasHiddenInput = _ref$hasHiddenInput === void 0 ? false : _ref$hasHiddenInput,
+      _ref$hiddenInputLocal = _ref.hiddenInputLocale,
+      hiddenInputLocale = _ref$hiddenInputLocal === void 0 ? 'en' : _ref$hiddenInputLocal,
+      _ref$hiddenInputType = _ref.hiddenInputType,
+      hiddenInputType = _ref$hiddenInputType === void 0 ? 'gregorian' : _ref$hiddenInputType,
+      _ref$hiddenInputForma = _ref.hiddenInputFormat,
+      hiddenInputFormat = _ref$hiddenInputForma === void 0 ? 'l' : _ref$hiddenInputForma;
+  var now = new _persianDate["default"]().toCalendar(type).toLocale(locale);
+  var VIEW_MODES = {
+    MONTH: 'month',
+    YEAR: 'year',
+    DECADE: 'decade',
+    CENTURY: 'century'
+  };
+
+  var _useState = (0, _react.useState)(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      isOpen = _useState2[0],
+      setIsOpen = _useState2[1];
+
+  var _useState3 = (0, _react.useState)({}),
+      _useState4 = _slicedToArray(_useState3, 2),
+      dateState = _useState4[0],
+      setDateState = _useState4[1];
+
+  var _useState5 = (0, _react.useState)(VIEW_MODES.MONTH),
+      _useState6 = _slicedToArray(_useState5, 2),
+      viewMode = _useState6[0],
+      setViewMode = _useState6[1];
+
+  var inputRef = (0, _react.useRef)(null);
+  var datepickerRef = (0, _react.useRef)(null);
+  var canUpdateInputRef = (0, _react.useRef)(true);
+  var selectedDateRef = (0, _react.useRef)(now);
+  var dateInstaceRef = (0, _react.useRef)(now.startOf('month'));
+  var dir = locale === 'fa' ? 'rtl' : 'ltr';
+
+  var openCalendar = function openCalendar() {
+    return setIsOpen(true);
+  };
+
+  var closeCalendar = function closeCalendar() {
+    return setIsOpen(false);
+  };
+
+  var toggleCalendar = function toggleCalendar() {
+    return setIsOpen(!isOpen);
+  };
+
+  var forceUpdate = (0, _react.useCallback)(function () {
+    return setDateState({});
+  }, []);
+  (0, _react.useEffect)(function () {
+    setInputValue();
+  }, [selectedDateRef.current, dateState]);
+  (0, _react.useEffect)(function () {
+    var handleClick = function handleClick(event) {
+      var dom = event.target;
+
+      if (!datepickerRef.current.contains(dom) && document.contains(dom)) {
+        closeCalendar();
       }
+    };
+
+    document.addEventListener('click', handleClick);
+    return function () {
+      return document.removeEventListener('click', handleClick);
+    };
+  }, [datepickerRef.current]);
+  (0, _react.useEffect)(function () {
+    updateDateInctanse(dateInstaceRef.current.toCalendar(type).startOf('month'));
+    selectedDateRef.current.toCalendar(type);
+  }, [type]);
+  (0, _react.useEffect)(function () {
+    updateDateInctanse(dateInstaceRef.current.toLocale(locale));
+    selectedDateRef.current.toLocale(locale);
+  }, [locale]);
+  (0, _react.useEffect)(function () {
+    setInputValue();
+  }, [format]);
+
+  var updateDateInctanse = function updateDateInctanse(persianDate) {
+    forceUpdate();
+    dateInstaceRef.current = persianDate;
+  };
+
+  var setInputValue = function setInputValue() {
+    if (canUpdateInputRef.current) {
+      inputRef.current.value = selectedDateRef.current.format(format);
     }
-  }
-  newObj['default'] = obj
-  if (cache) {
-    cache.set(obj, newObj)
-  }
-  return newObj
-}
+  };
 
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj }
-}
+  var parseDate = function parseDate(value) {
+    var date = (0, _parseString["default"])(value, dateInstaceRef.current, format);
 
-function _typeof(obj) {
-  if (typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol') {
-    _typeof = function _typeof(obj) {
-      return typeof obj
+    if (date) {
+      selectedDateRef.current = date;
+      updateDateInctanse(date.startOf('month'));
     }
-  } else {
-    _typeof = function _typeof(obj) {
-      return obj &&
-        typeof Symbol === 'function' &&
-        obj.constructor === Symbol &&
-        obj !== Symbol.prototype
-        ? 'symbol'
-        : typeof obj
-    }
-  }
-  return _typeof(obj)
-}
+  };
 
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object)
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object)
-    if (enumerableOnly)
-      symbols = symbols.filter(function(sym) {
-        return Object.getOwnPropertyDescriptor(object, sym).enumerable
-      })
-    keys.push.apply(keys, symbols)
-  }
-  return keys
-}
+  var onChangeInput = function onChangeInput(event) {
+    var value = event.target.value;
+    parseDate(value);
+    onChange(value);
+  };
 
-function _objectSpread(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {}
-    if (i % 2) {
-      ownKeys(Object(source), true).forEach(function(key) {
-        _defineProperty(target, key, source[key])
-      })
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source))
-    } else {
-      ownKeys(Object(source)).forEach(function(key) {
-        Object.defineProperty(
-          target,
-          key,
-          Object.getOwnPropertyDescriptor(source, key)
-        )
-      })
-    }
-  }
-  return target
-}
+  var onFocusInput = function onFocusInput(event) {
+    canUpdateInputRef.current = false;
+    openCalendar();
+    onFocus(event.target.value);
+  };
 
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    })
-  } else {
-    obj[key] = value
-  }
-  return obj
-}
+  var onBlurInput = function onBlurInput(event) {
+    canUpdateInputRef.current = true;
+    setInputValue();
+    onBlur(event.target.value);
+  };
 
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError('Cannot call a class as a function')
-  }
-}
+  var setDate = function setDate(event) {
+    var day = event.target.getAttribute('data-day');
+    var selectedDate = dateInstaceRef.current.startOf('month').add('d', day);
+    selectedDateRef.current = selectedDate;
+    updateDateInctanse(selectedDate.startOf('month'));
+    canUpdateInputRef.current = true;
+    setInputValue();
+    closeCalendar();
+    onSetDate(selectedDate.format(format));
+  };
 
-function _possibleConstructorReturn(self, call) {
-  if (call && (_typeof(call) === 'object' || typeof call === 'function')) {
-    return call
-  }
-  return _assertThisInitialized(self)
-}
+  var goToToday = function goToToday() {
+    selectedDateRef.current = now;
+    updateDateInctanse(now.startOf('month'));
+    onGoToToday(now.format(format));
+  };
 
-function _getPrototypeOf(o) {
-  _getPrototypeOf = Object.setPrototypeOf
-    ? Object.getPrototypeOf
-    : function _getPrototypeOf(o) {
-        return o.__proto__ || Object.getPrototypeOf(o)
-      }
-  return _getPrototypeOf(o)
-}
+  var setMonth = function setMonth(event) {
+    var month = event.target.getAttribute('data-month');
+    var date = new _persianDate["default"]([dateInstaceRef.current.year(), month]);
+    updateDateInctanse(date);
+    setViewMode(VIEW_MODES.MONTH);
+    onSetMonth(event);
+  };
 
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError(
-      "this hasn't been initialised - super() hasn't been called"
-    )
-  }
-  return self
-}
+  var setYear = function setYear(event) {
+    var year = event.target.getAttribute('data-year');
+    var date = new _persianDate["default"]([year]);
+    updateDateInctanse(date);
+    setViewMode(VIEW_MODES.YEAR);
+    onSetYear(event);
+  };
 
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i]
-    descriptor.enumerable = descriptor.enumerable || false
-    descriptor.configurable = true
-    if ('value' in descriptor) descriptor.writable = true
-    Object.defineProperty(target, descriptor.key, descriptor)
-  }
-}
+  var setDecade = function setDecade(event) {
+    var year = event.target.getAttribute('data-decade');
+    var date = new _persianDate["default"]([year]);
+    updateDateInctanse(date);
+    setViewMode(VIEW_MODES.DECADE);
+    onSetDecade(event);
+  };
 
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps)
-  if (staticProps) _defineProperties(Constructor, staticProps)
-  return Constructor
-}
+  var goToNextMonth = function goToNextMonth() {
+    updateDateInctanse(dateInstaceRef.current.startOf('month').add('M', 1));
+  };
 
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== 'function' && superClass !== null) {
-    throw new TypeError('Super expression must either be null or a function')
-  }
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: { value: subClass, writable: true, configurable: true }
-  })
-  if (superClass) _setPrototypeOf(subClass, superClass)
-}
+  var goToPrevMonth = function goToPrevMonth() {
+    var date = dateInstaceRef.current.add('d', -2);
+    updateDateInctanse(new _persianDate["default"]([date.year(), date.month()]));
+  };
 
-function _setPrototypeOf(o, p) {
-  _setPrototypeOf =
-    Object.setPrototypeOf ||
-    function _setPrototypeOf(o, p) {
-      o.__proto__ = p
-      return o
-    }
-  return _setPrototypeOf(o, p)
-}
+  var goToNextYear = function goToNextYear() {
+    updateDateInctanse(dateInstaceRef.current.startOf('year').add('y', 1));
+  };
 
-var Container =
-  /*#__PURE__*/
-  (function(_Component) {
-    _inherits(Container, _Component)
+  var goToPrevYear = function goToPrevYear() {
+    updateDateInctanse(dateInstaceRef.current.startOf('year').add('d', -1));
+  };
 
-    _createClass(Container, null, [
-      {
-        key: 'getDerivedStateFromProps',
-        value: function getDerivedStateFromProps(nextProps, prevState) {
-          var now = new _persianDate['default']()
-          now.toCalendar(nextProps.calendar)
-          now.toLocale(nextProps.locale)
+  var goToNextDecade = function goToNextDecade() {
+    updateDateInctanse(dateInstaceRef.current.startOf('year').add('y', 10));
+  };
 
-          if (
-            nextProps.locale !== prevState.locale ||
-            nextProps.calendar !== prevState.calendar
-          ) {
-            return _objectSpread(
-              {
-                locale: nextProps.locale,
-                calendar: nextProps.calendar,
-                now: now,
-                persianDate: now.startOf('month'),
-                selectedDate: now
-              },
-              nextProps
-            )
-          }
+  var goToPrevDecade = function goToPrevDecade() {
+    updateDateInctanse(new _persianDate["default"]([dateInstaceRef.current.year() - 10]));
+  };
 
-          return nextProps
-        }
-      }
-    ])
+  var goToNextCentury = function goToNextCentury() {
+    updateDateInctanse(dateInstaceRef.current.startOf('year').add('y', 100));
+  };
 
-    function Container(props) {
-      var _this
+  var goToPrevCentury = function goToPrevCentury() {
+    updateDateInctanse(new _persianDate["default"]([dateInstaceRef.current.year() - 100]));
+  };
 
-      _classCallCheck(this, Container)
+  var showYear = function showYear() {
+    setViewMode(VIEW_MODES.YEAR);
+    onShowYear();
+  };
 
-      _this = _possibleConstructorReturn(
-        this,
-        _getPrototypeOf(Container).call(this, props)
-      )
-      var now = new _persianDate['default']()
-      now.toCalendar(props.calendar)
-      now.toLocale(props.locale)
-      var persianDate = now.startOf('month')
-      var format = props.format || 'l'
-      _this.state = {
-        locale: props.locale || 'en',
-        calendar: props.calendar || 'gregorian',
-        now: now,
-        persianDate: persianDate,
-        selectedDate: now,
-        view: 'month',
-        format: format,
-        updateInputValue: true,
-        isOpen: false,
-        hasHeader: props.hasHeader || false,
-        inputName: props.inputName,
-        hiddenInput: props.hiddenInput || false,
-        hiddenInputFormat: props.hiddenInputFormat || 'YYYY-MM-DD',
-        hiddenInputLocale: props.hiddenInputLocale || 'en',
-        hiddenInputCalendar: props.hiddenInputCalendar || 'gregorian',
-        hasTodayLink: props.hasTodayLink || false
-      }
-      _this.dateInput = (0, _react.createRef)()
-      _this.openCalendar = _this.openCalendar.bind(
-        _assertThisInitialized(_this)
-      )
-      _this.closeCalendar = _this.closeCalendar.bind(
-        _assertThisInitialized(_this)
-      )
-      _this.toggleCalendar = _this.toggleCalendar.bind(
-        _assertThisInitialized(_this)
-      )
-      _this.setDate = _this.setDate.bind(_assertThisInitialized(_this))
-      _this.setMonth = _this.setMonth.bind(_assertThisInitialized(_this))
-      _this.setYear = _this.setYear.bind(_assertThisInitialized(_this))
-      _this.setDecade = _this.setDecade.bind(_assertThisInitialized(_this))
-      _this.goToNextMonth = _this.goToNextMonth.bind(
-        _assertThisInitialized(_this)
-      )
-      _this.goToPrevMonth = _this.goToPrevMonth.bind(
-        _assertThisInitialized(_this)
-      )
-      _this.goToPrevYear = _this.goToPrevYear.bind(
-        _assertThisInitialized(_this)
-      )
-      _this.goToNextYear = _this.goToNextYear.bind(
-        _assertThisInitialized(_this)
-      )
-      _this.goToNextDecade = _this.goToNextDecade.bind(
-        _assertThisInitialized(_this)
-      )
-      _this.goToPrevDecade = _this.goToPrevDecade.bind(
-        _assertThisInitialized(_this)
-      )
-      _this.goToPrevCentury = _this.goToPrevCentury.bind(
-        _assertThisInitialized(_this)
-      )
-      _this.goToNextCentury = _this.goToNextCentury.bind(
-        _assertThisInitialized(_this)
-      )
-      _this.showYear = _this.showYear.bind(_assertThisInitialized(_this))
-      _this.showDecade = _this.showDecade.bind(_assertThisInitialized(_this))
-      _this.showCentury = _this.showCentury.bind(_assertThisInitialized(_this))
-      _this.goToToday = _this.goToToday.bind(_assertThisInitialized(_this))
-      _this.parseDate = _this.parseDate.bind(_assertThisInitialized(_this))
-      _this.onBlurInput = _this.onBlurInput.bind(_assertThisInitialized(_this))
-      _this.onFocusInput = _this.onFocusInput.bind(
-        _assertThisInitialized(_this)
-      )
-      return _this
-    }
+  var showDecade = function showDecade() {
+    setViewMode(VIEW_MODES.DECADE);
+    onShowDecade();
+  };
 
-    _createClass(Container, [
-      {
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-          this.setInputValue()
-        }
-      },
-      {
-        key: 'componentDidUpdate',
-        value: function componentDidUpdate() {
-          this.setInputValue()
-        }
-      },
-      {
-        key: 'setInputValue',
-        value: function setInputValue() {
-          if (this.state.updateInputValue) {
-            this.dateInput.current.value = this.state.selectedDate.format(
-              this.state.format
-            )
+  var showCentury = function showCentury() {
+    setViewMode(VIEW_MODES.CENTURY);
+    onShowCentury();
+  };
 
-            if (this.props.onSetDate) {
-              this.props.onSetDate(this.state.selectedDate)
-            }
-          }
-        }
-      },
-      {
-        key: 'updateInputValue',
-        value: function updateInputValue() {
-          this.setState({
-            updateInputValue: true
-          })
-        }
-      },
-      {
-        key: 'openCalendar',
-        value: function openCalendar() {
-          if (!this.state.isOpen) this.toggleCalendar()
-        }
-      },
-      {
-        key: 'closeCalendar',
-        value: function closeCalendar() {
-          if (this.state.isOpen) this.toggleCalendar()
-        }
-      },
-      {
-        key: 'toggleCalendar',
-        value: function toggleCalendar() {
-          this.setState({
-            isOpen: !this.state.isOpen
-          })
+  var inputAttributes = {
+    className: 'date-input',
+    type: 'text',
+    name: inputName,
+    spellCheck: false,
+    onChange: onChangeInput,
+    onFocus: onFocusInput,
+    onBlur: onBlurInput,
+    ref: inputRef
+  };
+  var hiddenInputAttributes = {
+    type: 'hidden',
+    name: inputName,
+    value: new _persianDate["default"](selectedDateRef.current).toLocale(hiddenInputLocale).toCalendar(hiddenInputType).format(hiddenInputFormat)
+  };
+  var commonAttributes = {
+    now: now,
+    locale: locale,
+    year: dateInstaceRef.current.year(),
+    selected: selectedDateRef.current,
+    persianDate: dateInstaceRef.current
+  };
+  var monthAttributes = {
+    onSelectDate: setDate,
+    goNext: goToNextMonth,
+    goPrev: goToPrevMonth,
+    onSelectYear: showYear,
+    goToToday: goToToday,
+    hasHeader: hasHeader,
+    hasTodayLink: hasTodayLink
+  };
+  var yearAttributes = {
+    onSelectMonth: setMonth,
+    goNext: goToNextYear,
+    goPrev: goToPrevYear,
+    onSelectDecade: showDecade
+  };
+  var decadeAttributes = {
+    onSelectYear: setYear,
+    goNext: goToNextDecade,
+    goPrev: goToPrevDecade,
+    onSelectCentury: showCentury
+  };
+  var centuryAttributes = {
+    onSelectDecade: setDecade,
+    goNext: goToNextCentury,
+    goPrev: goToPrevCentury
+  };
+  return /*#__PURE__*/_react["default"].createElement("div", {
+    className: "react-persian-datepicker react-persian-datepicker-".concat(dir),
+    ref: datepickerRef
+  }, /*#__PURE__*/_react["default"].createElement("div", {
+    className: "input"
+  }, /*#__PURE__*/_react["default"].createElement(_Icons.CalendarIcon, {
+    className: "input-icon",
+    onClick: toggleCalendar
+  }), /*#__PURE__*/_react["default"].createElement("input", inputAttributes), hasHiddenInput && /*#__PURE__*/_react["default"].createElement("input", hiddenInputAttributes)), isOpen ? viewMode === VIEW_MODES.MONTH ? /*#__PURE__*/_react["default"].createElement(_Month["default"], _extends({}, commonAttributes, monthAttributes)) : viewMode === VIEW_MODES.YEAR ? /*#__PURE__*/_react["default"].createElement(_Year["default"], _extends({}, commonAttributes, yearAttributes)) : viewMode === VIEW_MODES.DECADE ? /*#__PURE__*/_react["default"].createElement(_Decade["default"], _extends({}, commonAttributes, decadeAttributes)) : viewMode === VIEW_MODES.CENTURY ? /*#__PURE__*/_react["default"].createElement(_Century["default"], _extends({}, commonAttributes, centuryAttributes)) : null : null);
+};
 
-          if (this.props.onToggleCalendar) {
-            this.props.onToggleCalendar(!this.state.isOpen)
-          }
-        }
-      },
-      {
-        key: 'monthAttributes',
-        value: function monthAttributes() {
-          return {
-            locale: this.state.locale,
-            persianDate: this.state.persianDate,
-            now: this.state.now,
-            selected: this.state.selectedDate,
-            onSelectDate: this.setDate,
-            goNext: this.goToNextMonth,
-            goPrev: this.goToPrevMonth,
-            onSelectYear: this.showYear,
-            goToToday: this.goToToday,
-            hasHeader: this.state.hasHeader,
-            hasTodayLink: this.state.hasTodayLink
-          }
-        }
-      },
-      {
-        key: 'yearAttributes',
-        value: function yearAttributes() {
-          return {
-            locale: this.state.locale,
-            persianDate: this.state.persianDate,
-            onSelectMonth: this.setMonth,
-            goNext: this.goToNextYear,
-            goPrev: this.goToPrevYear,
-            onSelectDecade: this.showDecade
-          }
-        }
-      },
-      {
-        key: 'decadeAttributes',
-        value: function decadeAttributes() {
-          return {
-            locale: this.state.locale,
-            year: this.state.persianDate.year(),
-            onSelectYear: this.setYear,
-            goNext: this.goToNextDecade,
-            goPrev: this.goToPrevDecade,
-            onSelectCentury: this.showCentury
-          }
-        }
-      },
-      {
-        key: 'centuryAttributes',
-        value: function centuryAttributes() {
-          return {
-            locale: this.state.locale,
-            year: this.state.persianDate.year(),
-            onSelectDecade: this.setDecade,
-            goNext: this.goToNextCentury,
-            goPrev: this.goToPrevCentury
-          }
-        }
-      },
-      {
-        key: 'goToToday',
-        value: function goToToday() {
-          this.setState({
-            persianDate: this.state.now.startOf('month'),
-            selectedDate: this.state.now
-          })
-        }
-      },
-      {
-        key: 'setDate',
-        value: function setDate(event) {
-          var day = event.target.getAttribute('data-day')
-          var selectedDate = this.state.persianDate.add('d', day)
-          this.setState({
-            persianDate: selectedDate.startOf('month'),
-            selectedDate: selectedDate
-          })
-          this.updateInputValue()
-          this.closeCalendar()
-        }
-      },
-      {
-        key: 'setMonth',
-        value: function setMonth(event) {
-          var month = event.target.getAttribute('data-month')
-          var persianDate = new _persianDate['default']([
-            this.state.persianDate.year(),
-            month
-          ])
-          this.setState({
-            persianDate: persianDate,
-            view: 'month'
-          })
-        }
-      },
-      {
-        key: 'setYear',
-        value: function setYear(event) {
-          var year = event.target.getAttribute('data-year')
-          var persianDate = new _persianDate['default']([year])
-          this.setState({
-            persianDate: persianDate,
-            view: 'year'
-          })
-        }
-      },
-      {
-        key: 'setDecade',
-        value: function setDecade(event) {
-          var year = event.target.getAttribute('data-decade')
-          var persianDate = new _persianDate['default']([year])
-          this.setState({
-            persianDate: persianDate,
-            view: 'decade'
-          })
-        }
-      },
-      {
-        key: 'goToNextMonth',
-        value: function goToNextMonth() {
-          var persianDate = this.state.persianDate.startOf('month').add('M', 1)
-          this.setState({
-            persianDate: persianDate
-          })
-        }
-      },
-      {
-        key: 'goToPrevMonth',
-        value: function goToPrevMonth() {
-          var persianDate = this.state.persianDate
-          persianDate = persianDate.add('d', -2)
-          this.setState({
-            persianDate: new _persianDate['default']([
-              persianDate.year(),
-              persianDate.month()
-            ])
-          })
-        }
-      },
-      {
-        key: 'goToNextYear',
-        value: function goToNextYear() {
-          var persianDate = this.state.persianDate.startOf('year').add('y', 1)
-          this.setState({
-            persianDate: persianDate
-          })
-        }
-      },
-      {
-        key: 'goToPrevYear',
-        value: function goToPrevYear() {
-          var persianDate = this.state.persianDate
-          persianDate = persianDate.startOf('year').add('d', -1)
-          this.setState({
-            persianDate: persianDate
-          })
-        }
-      },
-      {
-        key: 'goToNextDecade',
-        value: function goToNextDecade() {
-          var persianDate = this.state.persianDate.startOf('year').add('y', 10)
-          this.setState({
-            persianDate: persianDate
-          })
-        }
-      },
-      {
-        key: 'goToPrevDecade',
-        value: function goToPrevDecade() {
-          var persianDate = new _persianDate['default']([
-            this.state.persianDate.year() - 10
-          ])
-          this.setState({
-            persianDate: persianDate
-          })
-        }
-      },
-      {
-        key: 'goToNextCentury',
-        value: function goToNextCentury() {
-          var persianDate = this.state.persianDate.startOf('year').add('y', 100)
-          this.setState({
-            persianDate: persianDate
-          })
-        }
-      },
-      {
-        key: 'goToPrevCentury',
-        value: function goToPrevCentury() {
-          var persianDate = new _persianDate['default']([
-            this.state.persianDate.year() - 100
-          ])
-          this.setState({
-            persianDate: persianDate
-          })
-        }
-      },
-      {
-        key: 'showYear',
-        value: function showYear() {
-          this.setState({
-            view: 'year'
-          })
-        }
-      },
-      {
-        key: 'showDecade',
-        value: function showDecade() {
-          this.setState({
-            view: 'decade'
-          })
-        }
-      },
-      {
-        key: 'showCentury',
-        value: function showCentury() {
-          this.setState({
-            view: 'century'
-          })
-        }
-      },
-      {
-        key: 'parseDate',
-        value: function parseDate(event) {
-          var date = (0, _parseString['default'])(
-            event.target.value,
-            this.state.persianDate,
-            this.state.format
-          )
-
-          if (date) {
-            this.setState({
-              selectedDate: date,
-              persianDate: date.startOf('month'),
-              updateInputValue: false
-            })
-          }
-        }
-      },
-      {
-        key: 'onBlurInput',
-        value: function onBlurInput() {
-          this.updateInputValue()
-        }
-      },
-      {
-        key: 'onFocusInput',
-        value: function onFocusInput() {
-          this.setState({
-            updateInputValue: false
-          })
-          this.openCalendar()
-        }
-      },
-      {
-        key: 'inputAttributes',
-        value: function inputAttributes() {
-          return {
-            className: 'date-input',
-            type: 'text',
-            name: this.state.inputName,
-            spellCheck: false,
-            onChange: this.parseDate,
-            onFocus: this.onFocusInput,
-            onBlur: this.onBlurInput,
-            ref: this.dateInput
-          }
-        }
-      },
-      {
-        key: 'hiddenInputAttributes',
-        value: function hiddenInputAttributes() {
-          var date = new _persianDate['default'](this.state.selectedDate)
-          date.toLocale(this.state.hiddenInputLocale)
-          date.toCalendar(this.state.hiddenInputCalendar)
-          return {
-            type: 'hidden',
-            name: this.state.inputName,
-            value: date.format(this.state.hiddenInputFormat)
-          }
-        }
-      },
-      {
-        key: 'render',
-        value: function render() {
-          return _react['default'].createElement(
-            'div',
-            {
-              className: 'react-persian-datepicker',
-              dir: this.state.locale === 'fa' ? 'rtl' : ''
-            },
-            _react['default'].createElement(
-              'div',
-              {
-                className: 'input'
-              },
-              _react['default'].createElement(_CalendarIcon['default'], {
-                className: 'input-icon',
-                onClick: this.toggleCalendar
-              }),
-              _react['default'].createElement('input', this.inputAttributes()),
-              this.state.hiddenInput
-                ? _react['default'].createElement(
-                    'input',
-                    this.hiddenInputAttributes()
-                  )
-                : ''
-            ),
-            this.state.isOpen
-              ? this.state.view === 'month'
-                ? _react['default'].createElement(
-                    _Month['default'],
-                    this.monthAttributes()
-                  )
-                : this.state.view === 'year'
-                ? _react['default'].createElement(
-                    _Year['default'],
-                    this.yearAttributes()
-                  )
-                : this.state.view === 'decade'
-                ? _react['default'].createElement(
-                    _Decade['default'],
-                    this.decadeAttributes()
-                  )
-                : this.state.view === 'century'
-                ? _react['default'].createElement(
-                    _Century['default'],
-                    this.centuryAttributes()
-                  )
-                : ''
-              : ''
-          )
-        }
-      }
-    ])
-
-    return Container
-  })(_react.Component)
-
-var _default = Container
-exports['default'] = _default
+Datepicker.propTypes = {
+  type: _propTypes["default"].oneOf(['gregorian', 'persian']),
+  locale: _propTypes["default"].oneOf(['en', 'fa']),
+  format: _propTypes["default"].string,
+  onChange: _propTypes["default"].func,
+  onBlur: _propTypes["default"].func,
+  onFocus: _propTypes["default"].func,
+  onSetDate: _propTypes["default"].func,
+  onGoToToday: _propTypes["default"].func,
+  onSetMonth: _propTypes["default"].func,
+  onSetYear: _propTypes["default"].func,
+  onSetDecade: _propTypes["default"].func,
+  onShowYear: _propTypes["default"].func,
+  onShowDecade: _propTypes["default"].func,
+  onShowCentury: _propTypes["default"].func,
+  inputName: _propTypes["default"].string,
+  hasHeader: _propTypes["default"].bool,
+  hasTodayLink: _propTypes["default"].bool,
+  hasHiddenInput: _propTypes["default"].bool,
+  hiddenInputLocale: _propTypes["default"].oneOf(['en', 'fa']),
+  hiddenInputType: _propTypes["default"].oneOf(['gregorian', 'persian']),
+  hiddenInputFormat: _propTypes["default"].string
+};
+var _default = Datepicker;
+exports["default"] = _default;

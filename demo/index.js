@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from 'react-dom'
+import {render} from 'react-dom'
 import Datepicker from '../src'
 
 window.React = React
@@ -9,8 +9,8 @@ class PersianDatepicker extends React.Component {
     super(props)
     this.state = {
       locale: 'en',
-      calendar: 'gregorian',
-      format: 'MMM D, YYYY'
+      type: 'gregorian',
+      format: 'MMM D, YYYY',
     }
 
     this.changeCalendar = this.changeCalendar.bind(this)
@@ -20,19 +20,19 @@ class PersianDatepicker extends React.Component {
 
   changeCalendar(event) {
     this.setState({
-      calendar: event.target.value
+      type: event.target.value,
     })
   }
 
   changeLocale(event) {
     this.setState({
-      locale: event.target.value
+      locale: event.target.value,
     })
   }
 
   changeFormat(event) {
     this.setState({
-      format: event.target.value
+      format: event.target.value,
     })
   }
 
@@ -50,7 +50,7 @@ class PersianDatepicker extends React.Component {
                   name="type"
                   value="gregorian"
                   onChange={this.changeCalendar}
-                  checked={this.state.calendar === 'gregorian'}
+                  checked={this.state.type === 'gregorian'}
                 />
                 <div className="state p-primary">
                   <label>Gregorian</label>
@@ -63,7 +63,7 @@ class PersianDatepicker extends React.Component {
                   name="type"
                   value="persian"
                   onChange={this.changeCalendar}
-                  checked={this.state.calendar === 'persian'}
+                  checked={this.state.type === 'persian'}
                 />
                 <div className="state p-primary">
                   <label>Jalali</label>

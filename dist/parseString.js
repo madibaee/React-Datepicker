@@ -30,7 +30,7 @@ var _default = function _default(input, persianDate, format) {
 
     for (var i = 0; i < format.length; i++) {
       var value = camelize(params[i + 1]);
-      output = _objectSpread({}, output, {}, parse(toLatinNumber(value), format[i]));
+      output = _objectSpread(_objectSpread({}, output), parse(toLatinNumber(value), format[i]));
     }
 
     _persianDate["default"].calendarType = persianDate.calendarType;

@@ -5,37 +5,41 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "webpack --mode production",
-    "start:dev": "webpack-dev-server",
+    "start": "webpack-dev-server",
     "transpile": "babel src -d dist --copy-files",
     "transpile:css": "node-sass --include-path scss style/style.scss style/style.css"
   },
   "author": "MA Dibaee",
   "license": "MIT",
   "devDependencies": {
-    "@babel/cli": "^7.7.7",
-    "@babel/core": "^7.7.7",
-    "@babel/preset-env": "^7.7.7",
-    "@babel/preset-react": "^7.7.4",
-    "babel-loader": "^8.0.6",
-    "css-loader": "^3.4.0",
-    "husky": ">=1",
-    "lint-staged": ">=8",
-    "node-sass": "^4.13.0",
-    "prettier": "^1.19.1",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-react": "^7.9.4",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^3.5.3",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-react": "^7.19.0",
+    "husky": ">=4",
+    "lint-staged": ">=10",
+    "node-sass": "^4.14.0",
+    "prettier": "^2.0.5",
     "pretty-checkbox": "^3.0.3",
-    "sass-loader": "^8.0.0",
-    "style-loader": "^1.1.2",
-    "webpack": "^4.41.4",
-    "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.10.1"
+    "prop-types": "^15.7.2",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3",
+    "webpackbar": "^4.0.0"
   },
   "peerDependencies": {
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },
   "dependencies": {
-    "add": "^2.0.6",
-    "mdi-react": "^6.6.0",
     "persian-date": "^1.0.5",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
@@ -46,9 +50,7 @@
     }
   },
   "lint-staged": {
-    "*.{js,css,json,md}": [
-      "prettier --write",
-      "git add"
-    ]
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
   }
 }

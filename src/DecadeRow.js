@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import PersianDate from 'persian-date'
 
 const isActive = (i, j) => (i === 3 && j !== 1 ? false : true)
 
@@ -14,7 +16,7 @@ const yearString = (i, j, persianDate) => {
     : ''
 }
 
-export default ({ row, persianDate, onSelectYear }) => (
+const DecadeRow = ({row, persianDate, onSelectYear}) => (
   <tr className="decade-years">
     {[...Array(3)].map((_, j) => (
       <td
@@ -28,3 +30,11 @@ export default ({ row, persianDate, onSelectYear }) => (
     ))}
   </tr>
 )
+
+DecadeRow.propTypes = {
+  row: PropTypes.number,
+  persianDate: PropTypes.instanceOf(PersianDate),
+  onSelectYear: PropTypes.func,
+}
+
+export default DecadeRow

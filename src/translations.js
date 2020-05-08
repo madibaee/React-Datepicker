@@ -1,8 +1,8 @@
 export default {
   fa: {
-    today: 'امروز'
+    today: 'امروز',
   },
   en: {
-    today: 'Today'
-  }
+    today: 'Today',
+  },
 }

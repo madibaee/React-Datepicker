@@ -1,7 +1,8 @@
+import PropTypes from 'prop-types'
 import PersianDate from 'persian-date'
-import React, { Component, createRef } from 'react'
+import React, {useEffect, useState, useRef, useCallback} from 'react'
 
-import CalendarIcon from 'mdi-react/CalendarIcon'
+import {CalendarIcon} from './Icons'
 
 import Month from './Month'
 import Year from './Year'
@@ -9,373 +10,315 @@ import Decade from './Decade'
 import Century from './Century'
 import parseString from './parseString'
 
-class Container extends Component {
-  static getDerivedStateFromProps(nextProps, prevState) {
-    const now = new PersianDate()
-    now.toCalendar(nextProps.calendar)
-    now.toLocale(nextProps.locale)
-    if (
-      nextProps.locale !== prevState.locale ||
-      nextProps.calendar !== prevState.calendar
-    ) {
-      return {
-        locale: nextProps.locale,
-        calendar: nextProps.calendar,
-        now,
-        persianDate: now.startOf('month'),
-        selectedDate: now,
-        ...nextProps
+const Datepicker = ({
+  type = 'gregorian',
+  locale = 'en',
+  format = 'l',
+  onChange = x => x,
+  onFocus = x => x,
+  onBlur = x => x,
+  onSetDate = x => x,
+  onGoToToday = x => x,
+  onSetMonth = x => x,
+  onSetYear = x => x,
+  onSetDecade = x => x,
+  onShowYear = x => x,
+  onShowDecade = x => x,
+  onShowCentury = x => x,
+  inputName = 'date',
+  hasHeader = false,
+  hasTodayLink = false,
+  hasHiddenInput = false,
+  hiddenInputLocale = 'en',
+  hiddenInputType = 'gregorian',
+  hiddenInputFormat = 'l',
+}) => {
+  const now = new PersianDate().toCalendar(type).toLocale(locale)
+
+  const VIEW_MODES = {
+    MONTH: 'month',
+    YEAR: 'year',
+    DECADE: 'decade',
+    CENTURY: 'century',
+  }
+
+  const [isOpen, setIsOpen] = useState(false)
+  const [dateState, setDateState] = useState({})
+  const [viewMode, setViewMode] = useState(VIEW_MODES.MONTH)
+
+  const inputRef = useRef(null)
+  const datepickerRef = useRef(null)
+  const canUpdateInputRef = useRef(true)
+  const selectedDateRef = useRef(now)
+  const dateInstaceRef = useRef(now.startOf('month'))
+
+  const dir = locale === 'fa' ? 'rtl' : 'ltr'
+
+  const openCalendar = () => setIsOpen(true)
+  const closeCalendar = () => setIsOpen(false)
+  const toggleCalendar = () => setIsOpen(!isOpen)
+
+  const forceUpdate = useCallback(() => setDateState({}), [])
+
+  useEffect(() => {
+    setInputValue()
+  }, [selectedDateRef.current, dateState])
+
+  useEffect(() => {
+    const handleClick = event => {
+      const dom = event.target
+      if (!datepickerRef.current.contains(dom) && document.contains(dom)) {
+        closeCalendar()
       }
     }
-    return nextProps
+    document.addEventListener('click', handleClick)
+    return () => document.removeEventListener('click', handleClick)
+  }, [datepickerRef.current])
+
+  useEffect(() => {
+    updateDateInctanse(dateInstaceRef.current.toCalendar(type).startOf('month'))
+    selectedDateRef.current.toCalendar(type)
+  }, [type])
+
+  useEffect(() => {
+    updateDateInctanse(dateInstaceRef.current.toLocale(locale))
+    selectedDateRef.current.toLocale(locale)
+  }, [locale])
+
+  useEffect(() => {
+    setInputValue()
+  }, [format])
+
+  const updateDateInctanse = persianDate => {
+    forceUpdate()
+    dateInstaceRef.current = persianDate
   }
 
-  constructor(props) {
-    super(props)
-    const now = new PersianDate()
-    now.toCalendar(props.calendar)
-    now.toLocale(props.locale)
-    const persianDate = now.startOf('month')
-    const format = props.format || 'l'
-    this.state = {
-      locale: props.locale || 'en',
-      calendar: props.calendar || 'gregorian',
-      now,
-      persianDate,
-      selectedDate: now,
-      view: 'month',
-      format,
-      updateInputValue: true,
-      isOpen: false,
-      hasHeader: props.hasHeader || false,
-      inputName: props.inputName,
-      hiddenInput: props.hiddenInput || false,
-      hiddenInputFormat: props.hiddenInputFormat || 'YYYY-MM-DD',
-      hiddenInputLocale: props.hiddenInputLocale || 'en',
-      hiddenInputCalendar: props.hiddenInputCalendar || 'gregorian',
-      hasTodayLink: props.hasTodayLink || false
-    }
-
-    this.dateInput = createRef()
-
-    this.openCalendar = this.openCalendar.bind(this)
-    this.closeCalendar = this.closeCalendar.bind(this)
-    this.toggleCalendar = this.toggleCalendar.bind(this)
-    this.setDate = this.setDate.bind(this)
-    this.setMonth = this.setMonth.bind(this)
-    this.setYear = this.setYear.bind(this)
-    this.setDecade = this.setDecade.bind(this)
-    this.goToNextMonth = this.goToNextMonth.bind(this)
-    this.goToPrevMonth = this.goToPrevMonth.bind(this)
-    this.goToPrevYear = this.goToPrevYear.bind(this)
-    this.goToNextYear = this.goToNextYear.bind(this)
-    this.goToNextDecade = this.goToNextDecade.bind(this)
-    this.goToPrevDecade = this.goToPrevDecade.bind(this)
-    this.goToPrevCentury = this.goToPrevCentury.bind(this)
-    this.goToNextCentury = this.goToNextCentury.bind(this)
-    this.showYear = this.showYear.bind(this)
-    this.showDecade = this.showDecade.bind(this)
-    this.showCentury = this.showCentury.bind(this)
-    this.goToToday = this.goToToday.bind(this)
-    this.parseDate = this.parseDate.bind(this)
-    this.onBlurInput = this.onBlurInput.bind(this)
-    this.onFocusInput = this.onFocusInput.bind(this)
-  }
-
-  componentDidMount() {
-    this.setInputValue()
-  }
-
-  componentDidUpdate() {
-    this.setInputValue()
-  }
-
-  setInputValue() {
-    if (this.state.updateInputValue) {
-      this.dateInput.current.value = this.state.selectedDate.format(
-        this.state.format
-      )
-      if (this.props.onSetDate) {
-        this.props.onSetDate(this.state.selectedDate)
-      }
+  const setInputValue = () => {
+    if (canUpdateInputRef.current) {
+      inputRef.current.value = selectedDateRef.current.format(format)
     }
   }
 
-  updateInputValue() {
-    this.setState({
-      updateInputValue: true
-    })
-  }
-
-  openCalendar() {
-    if (!this.state.isOpen) this.toggleCalendar()
-  }
-
-  closeCalendar() {
-    if (this.state.isOpen) this.toggleCalendar()
-  }
-
-  toggleCalendar() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    })
-    if (this.props.onToggleCalendar) {
-      this.props.onToggleCalendar(!this.state.isOpen)
-    }
-  }
-
-  monthAttributes() {
-    return {
-      locale: this.state.locale,
-      persianDate: this.state.persianDate,
-      now: this.state.now,
-      selected: this.state.selectedDate,
-      onSelectDate: this.setDate,
-      goNext: this.goToNextMonth,
-      goPrev: this.goToPrevMonth,
-      onSelectYear: this.showYear,
-      goToToday: this.goToToday,
-      hasHeader: this.state.hasHeader,
-      hasTodayLink: this.state.hasTodayLink
-    }
-  }
-
-  yearAttributes() {
-    return {
-      locale: this.state.locale,
-      persianDate: this.state.persianDate,
-      onSelectMonth: this.setMonth,
-      goNext: this.goToNextYear,
-      goPrev: this.goToPrevYear,
-      onSelectDecade: this.showDecade
-    }
-  }
-
-  decadeAttributes() {
-    return {
-      locale: this.state.locale,
-      year: this.state.persianDate.year(),
-      onSelectYear: this.setYear,
-      goNext: this.goToNextDecade,
-      goPrev: this.goToPrevDecade,
-      onSelectCentury: this.showCentury
-    }
-  }
-
-  centuryAttributes() {
-    return {
-      locale: this.state.locale,
-      year: this.state.persianDate.year(),
-      onSelectDecade: this.setDecade,
-      goNext: this.goToNextCentury,
-      goPrev: this.goToPrevCentury
-    }
-  }
-
-  goToToday() {
-    this.setState({
-      persianDate: this.state.now.startOf('month'),
-      selectedDate: this.state.now
-    })
-  }
-
-  setDate(event) {
-    const day = event.target.getAttribute('data-day')
-    const selectedDate = this.state.persianDate.add('d', day)
-    this.setState({
-      persianDate: selectedDate.startOf('month'),
-      selectedDate
-    })
-    this.updateInputValue()
-    this.closeCalendar()
-  }
-
-  setMonth(event) {
-    const month = event.target.getAttribute('data-month')
-    const persianDate = new PersianDate([this.state.persianDate.year(), month])
-    this.setState({
-      persianDate,
-      view: 'month'
-    })
-  }
-
-  setYear(event) {
-    const year = event.target.getAttribute('data-year')
-    const persianDate = new PersianDate([year])
-    this.setState({
-      persianDate,
-      view: 'year'
-    })
-  }
-
-  setDecade(event) {
-    const year = event.target.getAttribute('data-decade')
-    const persianDate = new PersianDate([year])
-    this.setState({
-      persianDate,
-      view: 'decade'
-    })
-  }
-
-  goToNextMonth() {
-    const persianDate = this.state.persianDate.startOf('month').add('M', 1)
-    this.setState({
-      persianDate
-    })
-  }
-
-  goToPrevMonth() {
-    var persianDate = this.state.persianDate
-    persianDate = persianDate.add('d', -2)
-    this.setState({
-      persianDate: new PersianDate([persianDate.year(), persianDate.month()])
-    })
-  }
-
-  goToNextYear() {
-    const persianDate = this.state.persianDate.startOf('year').add('y', 1)
-    this.setState({
-      persianDate
-    })
-  }
-
-  goToPrevYear() {
-    var persianDate = this.state.persianDate
-    persianDate = persianDate.startOf('year').add('d', -1)
-    this.setState({
-      persianDate
-    })
-  }
-
-  goToNextDecade() {
-    const persianDate = this.state.persianDate.startOf('year').add('y', 10)
-    this.setState({
-      persianDate
-    })
-  }
-
-  goToPrevDecade() {
-    const persianDate = new PersianDate([this.state.persianDate.year() - 10])
-    this.setState({
-      persianDate
-    })
-  }
-
-  goToNextCentury() {
-    const persianDate = this.state.persianDate.startOf('year').add('y', 100)
-    this.setState({
-      persianDate
-    })
-  }
-
-  goToPrevCentury() {
-    const persianDate = new PersianDate([this.state.persianDate.year() - 100])
-    this.setState({
-      persianDate
-    })
-  }
-
-  showYear() {
-    this.setState({
-      view: 'year'
-    })
-  }
-
-  showDecade() {
-    this.setState({
-      view: 'decade'
-    })
-  }
-
-  showCentury() {
-    this.setState({
-      view: 'century'
-    })
-  }
-
-  parseDate(event) {
-    const date = parseString(
-      event.target.value,
-      this.state.persianDate,
-      this.state.format
-    )
+  const parseDate = value => {
+    const date = parseString(value, dateInstaceRef.current, format)
     if (date) {
-      this.setState({
-        selectedDate: date,
-        persianDate: date.startOf('month'),
-        updateInputValue: false
-      })
+      selectedDateRef.current = date
+      updateDateInctanse(date.startOf('month'))
     }
   }
 
-  onBlurInput() {
-    this.updateInputValue()
+  const onChangeInput = event => {
+    const value = event.target.value
+    parseDate(value)
+    onChange(value)
   }
 
-  onFocusInput() {
-    this.setState({
-      updateInputValue: false
-    })
-    this.openCalendar()
+  const onFocusInput = event => {
+    canUpdateInputRef.current = false
+    openCalendar()
+    onFocus(event.target.value)
   }
 
-  inputAttributes() {
-    return {
-      className: 'date-input',
-      type: 'text',
-      name: this.state.inputName,
-      spellCheck: false,
-      onChange: this.parseDate,
-      onFocus: this.onFocusInput,
-      onBlur: this.onBlurInput,
-      ref: this.dateInput
-    }
+  const onBlurInput = event => {
+    canUpdateInputRef.current = true
+    setInputValue()
+    onBlur(event.target.value)
   }
 
-  hiddenInputAttributes() {
-    const date = new PersianDate(this.state.selectedDate)
-    date.toLocale(this.state.hiddenInputLocale)
-    date.toCalendar(this.state.hiddenInputCalendar)
-    return {
-      type: 'hidden',
-      name: this.state.inputName,
-      value: date.format(this.state.hiddenInputFormat)
-    }
+  const setDate = event => {
+    const day = event.target.getAttribute('data-day')
+    const selectedDate = dateInstaceRef.current.startOf('month').add('d', day)
+    selectedDateRef.current = selectedDate
+    updateDateInctanse(selectedDate.startOf('month'))
+    canUpdateInputRef.current = true
+    setInputValue()
+    closeCalendar()
+    onSetDate(selectedDate.format(format))
   }
 
-  render() {
-    return (
-      <div
-        className="react-persian-datepicker"
-        dir={this.state.locale === 'fa' ? 'rtl' : ''}
-      >
-        <div className="input">
-          <CalendarIcon className="input-icon" onClick={this.toggleCalendar} />
-          <input {...this.inputAttributes()} />
-          {this.state.hiddenInput ? (
-            <input {...this.hiddenInputAttributes()} />
-          ) : (
-            ''
-          )}
-        </div>
-        {this.state.isOpen ? (
-          this.state.view === 'month' ? (
-            <Month {...this.monthAttributes()} />
-          ) : this.state.view === 'year' ? (
-            <Year {...this.yearAttributes()} />
-          ) : this.state.view === 'decade' ? (
-            <Decade {...this.decadeAttributes()} />
-          ) : this.state.view === 'century' ? (
-            <Century {...this.centuryAttributes()} />
-          ) : (
-            ''
-          )
-        ) : (
-          ''
-        )}
+  const goToToday = () => {
+    selectedDateRef.current = now
+    updateDateInctanse(now.startOf('month'))
+    onGoToToday(now.format(format))
+  }
+
+  const setMonth = event => {
+    const month = event.target.getAttribute('data-month')
+    const date = new PersianDate([dateInstaceRef.current.year(), month])
+    updateDateInctanse(date)
+    setViewMode(VIEW_MODES.MONTH)
+    onSetMonth(event)
+  }
+
+  const setYear = event => {
+    const year = event.target.getAttribute('data-year')
+    const date = new PersianDate([year])
+    updateDateInctanse(date)
+    setViewMode(VIEW_MODES.YEAR)
+    onSetYear(event)
+  }
+
+  const setDecade = event => {
+    const year = event.target.getAttribute('data-decade')
+    const date = new PersianDate([year])
+    updateDateInctanse(date)
+    setViewMode(VIEW_MODES.DECADE)
+    onSetDecade(event)
+  }
+
+  const goToNextMonth = () => {
+    updateDateInctanse(dateInstaceRef.current.startOf('month').add('M', 1))
+  }
+
+  const goToPrevMonth = () => {
+    const date = dateInstaceRef.current.add('d', -2)
+    updateDateInctanse(new PersianDate([date.year(), date.month()]))
+  }
+
+  const goToNextYear = () => {
+    updateDateInctanse(dateInstaceRef.current.startOf('year').add('y', 1))
+  }
+
+  const goToPrevYear = () => {
+    updateDateInctanse(dateInstaceRef.current.startOf('year').add('d', -1))
+  }
+
+  const goToNextDecade = () => {
+    updateDateInctanse(dateInstaceRef.current.startOf('year').add('y', 10))
+  }
+
+  const goToPrevDecade = () => {
+    updateDateInctanse(new PersianDate([dateInstaceRef.current.year() - 10]))
+  }
+
+  const goToNextCentury = () => {
+    updateDateInctanse(dateInstaceRef.current.startOf('year').add('y', 100))
+  }
+
+  const goToPrevCentury = () => {
+    updateDateInctanse(new PersianDate([dateInstaceRef.current.year() - 100]))
+  }
+
+  const showYear = () => {
+    setViewMode(VIEW_MODES.YEAR)
+    onShowYear()
+  }
+
+  const showDecade = () => {
+    setViewMode(VIEW_MODES.DECADE)
+    onShowDecade()
+  }
+
+  const showCentury = () => {
+    setViewMode(VIEW_MODES.CENTURY)
+    onShowCentury()
+  }
+
+  const inputAttributes = {
+    className: 'date-input',
+    type: 'text',
+    name: inputName,
+    spellCheck: false,
+    onChange: onChangeInput,
+    onFocus: onFocusInput,
+    onBlur: onBlurInput,
+    ref: inputRef,
+  }
+
+  const hiddenInputAttributes = {
+    type: 'hidden',
+    name: inputName,
+    value: new PersianDate(selectedDateRef.current)
+      .toLocale(hiddenInputLocale)
+      .toCalendar(hiddenInputType)
+      .format(hiddenInputFormat),
+  }
+
+  const commonAttributes = {
+    now,
+    locale,
+    year: dateInstaceRef.current.year(),
+    selected: selectedDateRef.current,
+    persianDate: dateInstaceRef.current,
+  }
+
+  const monthAttributes = {
+    onSelectDate: setDate,
+    goNext: goToNextMonth,
+    goPrev: goToPrevMonth,
+    onSelectYear: showYear,
+    goToToday: goToToday,
+    hasHeader: hasHeader,
+    hasTodayLink: hasTodayLink,
+  }
+  const yearAttributes = {
+    onSelectMonth: setMonth,
+    goNext: goToNextYear,
+    goPrev: goToPrevYear,
+    onSelectDecade: showDecade,
+  }
+
+  const decadeAttributes = {
+    onSelectYear: setYear,
+    goNext: goToNextDecade,
+    goPrev: goToPrevDecade,
+    onSelectCentury: showCentury,
+  }
+
+  const centuryAttributes = {
+    onSelectDecade: setDecade,
+    goNext: goToNextCentury,
+    goPrev: goToPrevCentury,
+  }
+
+  return (
+    <div
+      className={`react-persian-datepicker react-persian-datepicker-${dir}`}
+      ref={datepickerRef}
+    >
+      <div className="input">
+        <CalendarIcon className="input-icon" onClick={toggleCalendar} />
+        <input {...inputAttributes} />
+        {hasHiddenInput && <input {...hiddenInputAttributes} />}
       </div>
-    )
-  }
+      {isOpen ? (
+        viewMode === VIEW_MODES.MONTH ? (
+          <Month {...commonAttributes} {...monthAttributes} />
+        ) : viewMode === VIEW_MODES.YEAR ? (
+          <Year {...commonAttributes} {...yearAttributes} />
+        ) : viewMode === VIEW_MODES.DECADE ? (
+          <Decade {...commonAttributes} {...decadeAttributes} />
+        ) : viewMode === VIEW_MODES.CENTURY ? (
+          <Century {...commonAttributes} {...centuryAttributes} />
+        ) : null
+      ) : null}
+    </div>
+  )
 }
 
-export default Container
+Datepicker.propTypes = {
+  type: PropTypes.oneOf(['gregorian', 'persian']),
+  locale: PropTypes.oneOf(['en', 'fa']),
+  format: PropTypes.string,
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func,
+  onFocus: PropTypes.func,
+  onSetDate: PropTypes.func,
+  onGoToToday: PropTypes.func,
+  onSetMonth: PropTypes.func,
+  onSetYear: PropTypes.func,
+  onSetDecade: PropTypes.func,
+  onShowYear: PropTypes.func,
+  onShowDecade: PropTypes.func,
+  onShowCentury: PropTypes.func,
+  inputName: PropTypes.string,
+  hasHeader: PropTypes.bool,
+  hasTodayLink: PropTypes.bool,
+  hasHiddenInput: PropTypes.bool,
+  hiddenInputLocale: PropTypes.oneOf(['en', 'fa']),
+  hiddenInputType: PropTypes.oneOf(['gregorian', 'persian']),
+  hiddenInputFormat: PropTypes.string,
+}
+
+export default Datepicker

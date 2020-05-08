@@ -1,10 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import PersianDate from 'persian-date'
 
+import Chevron from './Chevron'
 import CenturyRow from './CenturyRow'
-
-import ChevronLeftIcon from 'mdi-react/ChevronLeftIcon'
-import ChevronRightIcon from 'mdi-react/ChevronRightIcon'
 
 const century = year => {
   const firstYear = Math.floor(year / 100) * 100
@@ -18,16 +17,12 @@ const getCenturyString = year => {
   return `${end} - ${start}`
 }
 
-const Century = ({ locale, year, onSelectDecade, goPrev, goNext }) => (
+const Century = ({locale, year, onSelectDecade, goPrev, goNext}) => (
   <div className="picker">
     <div className="header">
-      <span className="chevron" onClick={goPrev}>
-        {locale === 'fa' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-      </span>
+      <Chevron dir="back" locale={locale} goBack={goPrev} />
       <span>{getCenturyString(year)}</span>
-      <span className="chevron" onClick={goNext}>
-        {locale === 'fa' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-      </span>
+      <Chevron dir="forward" locale={locale} goForward={goNext} />
     </div>
     <div className="body">
       <table>
@@ -45,5 +40,13 @@ const Century = ({ locale, year, onSelectDecade, goPrev, goNext }) => (
     </div>
   </div>
 )
+
+Century.propTypes = {
+  locale: PropTypes.oneOf(['en', 'fa']),
+  year: PropTypes.number,
+  onSelectDecade: PropTypes.func,
+  goPrev: PropTypes.func,
+  goNext: PropTypes.func,
+}
 
 export default Century

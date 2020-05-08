@@ -1,11 +1,12 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import PersianDate from 'persian-date'
 
 import MonthRow from './MonthRow'
 import TodayInfo from './TodayInfo'
 
 import translations from './translations'
-import ChevronRight from 'mdi-react/ChevronRightIcon'
-import ChevronLeft from 'mdi-react/ChevronLeftIcon'
+import Chevron from './Chevron'
 
 const computeRows = persianDate => {
   const days = persianDate.daysInMonth()
@@ -15,7 +16,7 @@ const computeRows = persianDate => {
   return body / 7 + (header === 0 ? 0 : 1) + (footer === 0 ? 0 : 1)
 }
 
-export default ({
+const Month = ({
   now,
   locale,
   goPrev,
@@ -26,48 +27,25 @@ export default ({
   persianDate,
   onSelectYear,
   onSelectDate,
-  hasTodayLink
+  hasTodayLink,
 }) => {
   const messages = translations[locale]
-  const chevronIcon = dir => {
-    const props = {
-      onClick: dir === 'back' ? goPrev : goNext,
-      size: 45
-    }
-    const isRight =
-      (locale === 'fa' && dir === 'back') || (locale === 'en' && dir === 'next')
-    const isLeft =
-      (locale === 'en' && dir === 'back') || (locale === 'fa' && dir === 'next')
-    if (isRight) {
-      return (
-        <span className="chevron">
-          <ChevronRight {...props} />
-        </span>
-      )
-    } else if (isLeft) {
-      return (
-        <span className="chevron">
-          <ChevronLeft {...props} />
-        </span>
-      )
-    }
-  }
   const showTodayLink = !now.isSameMonth(persianDate) && hasTodayLink
   return (
     <div className="picker">
       <div className={hasHeader ? 'header rich-header' : 'header'}>
         {hasHeader ? <TodayInfo date={selected} /> : null}
-        {chevronIcon('back')}
+        <Chevron dir="back" locale={locale} goBack={goPrev} />
         <span onClick={onSelectYear}>{persianDate.format('MMMM YYYY')}</span>
         {showTodayLink ? (
           <span className="today-chevron">
             <span className="go-to-today" onClick={goToToday}>
               {messages.today}
             </span>
-            {chevronIcon('next')}
+            <Chevron dir="forward" locale={locale} goForward={goNext} />
           </span>
         ) : (
-          chevronIcon('next')
+          <Chevron dir="forward" locale={locale} goForward={goNext} />
         )}
       </div>
       <div className="body">
@@ -96,3 +74,19 @@ export default ({
     </div>
   )
 }
+
+Month.propTypes = {
+  now: PropTypes.instanceOf(PersianDate),
+  selected: PropTypes.instanceOf(PersianDate),
+  persianDate: PropTypes.instanceOf(PersianDate),
+  locale: PropTypes.oneOf(['en', 'fa']),
+  goPrev: PropTypes.func,
+  goNext: PropTypes.func,
+  goToToday: PropTypes.func,
+  hasHeader: PropTypes.bool,
+  onSelectDate: PropTypes.func,
+  onSelectYear: PropTypes.func,
+  hasTodayLink: PropTypes.bool,
+}
+
+export default Month

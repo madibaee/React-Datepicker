@@ -1,7 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import PersianDate from 'persian-date'
 
-import ChevronLeftIcon from 'mdi-react/ChevronLeftIcon'
-import ChevronRightIcon from 'mdi-react/ChevronRightIcon'
+import Chevron from './Chevron'
 
 const Year = ({
   locale,
@@ -9,17 +10,13 @@ const Year = ({
   onSelectMonth,
   goPrev,
   goNext,
-  onSelectDecade
+  onSelectDecade,
 }) => (
   <div className="picker">
     <div className="header">
-      <span className="chevron" onClick={goPrev}>
-        {locale === 'fa' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-      </span>
+      <Chevron dir="back" locale={locale} goBack={goPrev} />
       <span onClick={onSelectDecade}>{persianDate.format('YYYY')}</span>
-      <span className="chevron" onClick={goNext}>
-        {locale === 'fa' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-      </span>
+      <Chevron dir="forward" locale={locale} goForward={goNext} />
     </div>
     <div className="body">
       <table>
@@ -41,5 +38,14 @@ const Year = ({
     </div>
   </div>
 )
+
+Year.propTypes = {
+  persianDate: PropTypes.instanceOf(PersianDate),
+  locale: PropTypes.oneOf(['en', 'fa']),
+  goPrev: PropTypes.func,
+  goNext: PropTypes.func,
+  onSelectMonth: PropTypes.func,
+  onSelectDecade: PropTypes.func,
+}
 
 export default Year
